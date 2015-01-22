@@ -1,0 +1,89 @@
+.postcodelookup-wrapper {
+    width: 60%;
+    height: auto;
+    margin: 20px;
+    text-align: center;
+}
+
+.postcodelookup-header {
+    background-color: #2C3E50;
+    color: #ffffff;
+    font-size: 120%;
+    padding: 15px;
+}
+
+.postcodelookup-content {
+    background-color: #ECF0F1;
+    color: #002157;
+    padding: 20px;
+}
+
+.postcodelookup-textbox-wrapper {
+    display:inline;
+}
+
+.loader-image {
+    display:inline;
+    position: absolute;
+    margin: 5px 0 0 10px;
+}
+
+.crm-container .ui-autocomplete-input {
+    width: 350px;
+    background: #ffffff;
+}
+
+/* highlight results */
+.ui-autocomplete span.hl_results {
+    background-color: #ffff66;
+}
+
+/* loading - the AJAX indicator */
+.ui-autocomplete-loading {
+    background: white url('../img/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+/* scroll results */
+.ui-autocomplete {
+    max-height: 250px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding for vertical scrollbar */
+    padding-right: 5px;
+    background-color: #ffffff;
+}
+
+.ui-autocomplete li {
+    font-size: 16px;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: transparent transparent #e5e5e5;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    line-height: 15px;
+    margin: 0;
+    padding: 20px !important;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+    background-color: #c00;
+    background: none;
+    font-weight: normal;
+    color: #212121;
+}
+
+/* IE 6 doesn't support max-height
+* we use height instead, but this forces the menu to always be this tall
+*/
+* html .ui-autocomplete {
+    height: 250px;
+}

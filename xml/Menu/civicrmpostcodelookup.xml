@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/postcodelookup/settings</path>
+    <page_callback>CRM_Civicrmpostcodelookup_Form_Setting</page_callback>
+    <title>Postcode Lookup - Settings</title>
+    <access_arguments>administer CiviCRM</access_arguments>
+  </item>
+  <item>
+     <path>civicrm/afd/ajax/search</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_Afd::search</page_callback>
+     <access_arguments>view event info</access_arguments>
+  </item>
+  <item>
+     <path>civicrm/afd/ajax/get</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_Afd::getaddress</page_callback>
+     <access_arguments>view event info</access_arguments>
+  </item>
+  <item>
+     <path>civicrm/civipostcode/ajax/search</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_Civipostcode::search</page_callback>
+     <access_arguments>view event info</access_arguments>
+  </item>
+  <item>
+     <path>civicrm/civipostcode/ajax/get</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_Civipostcode::getaddress</page_callback>
+     <access_arguments>view event info</access_arguments>
+  </item>
+  <item>
+     <path>civicrm/experian/ajax/search</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_Experian::search</page_callback>
+     <access_arguments>view event info</access_arguments>
+  </item>
+  <item>
+     <path>civicrm/experian/ajax/get</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_Experian::getaddress</page_callback>
+     <access_arguments>view event info</access_arguments>
+  </item>
+  <item>
+     <path>civicrm/postcodeanywhere/ajax/search</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere::search</page_callback>
+     <access_arguments>view event info</access_arguments>
+  </item>
+  <item>
+     <path>civicrm/postcodeanywhere/ajax/get</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere::getaddress</page_callback>
+     <access_arguments>view event info</access_arguments>
+  </item>
+</menu>
