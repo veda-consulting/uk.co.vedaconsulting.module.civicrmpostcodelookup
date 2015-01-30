@@ -53,7 +53,14 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Core_Page {
 			$addresslist = self::getAddressList($simpleXMLData, $postcode);
 		}
 
-		echo json_encode($addresslist);
+		$config = CRM_Core_Config::singleton();
+		if ($config->civiVersion < 4.5) {
+			foreach ($addresslist as $key => $val) {
+        echo "{$val['label']}|{$val['id']}\n";
+      }
+		} else {
+			echo json_encode($addresslist);
+		}
 		exit;
 	}
 

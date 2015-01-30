@@ -32,8 +32,35 @@ cj(document).ready(function(){
   }
 
   cj(function() {
+    var sourceUrl = CRM.url('civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/search', {"json": 1});
+
+    {/literal}{if $config->civiVersion < 4.5}{literal}
+
+    cj( postcodeElement ).autocomplete( sourceUrl, {
+        width: 400,
+        selectFirst: false,
+        minChars: minCharacters,
+        matchContains: true,
+        delay: 400,
+        max: 1000,
+        extraParams:{
+          term:function () {
+            return cj( postcodeElement ).val();
+          },
+          number:function () {
+             return cj(houseElement).val();
+          }
+        }
+    }).result(function(event, data, formatted) {
+       findAddressValues(data[1], blockNo);
+       cj(postcodeElement).val('');
+       return false;
+    });
+
+    {/literal}{else}{literal}
+
     cj(postcodeElement).autocomplete({
-      source: '/civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/search',
+      source: sourceUrl,
       minLength: minCharacters,
       data: {postcode: cj( postcodeElement ).val(), number: cj(houseElement).val(), mode: '0'},
       search: function( event, ui ) {
@@ -57,15 +84,20 @@ cj(document).ready(function(){
         cj(".ui-autocomplete").css("z-index", 1000);
       }
     });
+
+    {/literal}{/if}{literal}
+
   });
 });
 
 function findAddressValues(id , blockNo) {
+  cj('#loaderimage_'+blockNo).show();
   setAddressFields(false, blockNo);
+  var sourceUrl = CRM.url('civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/get', {"json": 1});
   cj.ajax({
     dataType: 'json',
     data: {id: id, mode: '0'},
-    url: '/civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/get',
+    url: sourceUrl,
     success: function (data) {
       setAddressFields(data.address, blockNo);
       setAddressFields(true, blockNo);
