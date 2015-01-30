@@ -65,7 +65,14 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
 		##Close the JSON source##
 		fclose($filetoparse);
 
-		echo json_encode($addresslist);
+		$config = CRM_Core_Config::singleton();
+		if ($config->civiVersion < 4.5) {
+			foreach ($addresslist as $key => $val) {
+        echo "{$val['label']}|{$val['id']}\n";
+      }
+		} else {
+			echo json_encode($addresslist);
+		}
 		exit;
 	}
 
@@ -94,7 +101,7 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
 		if (empty($addressList)) {
 			$addressRow["id"] = '';
 		  $addressRow["value"] = '';
-		  $addressRow["label"] = 'Error: Postcode Not Found';
+		  $addressRow["label"] = 'Postcode Not Found';
 		  array_push($addressList, $addressRow);
 		}
 

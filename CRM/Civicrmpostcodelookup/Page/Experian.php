@@ -66,7 +66,15 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Core_Page {
             $response['address'] = $address;
         }
 
-        echo json_encode($response);
+        $config = CRM_Core_Config::singleton();
+        if ($config->civiVersion < 4.5) {
+            foreach ($response as $key => $val) {
+                echo "{$val['label']}|{$val['id']}\n";
+            }
+        } else {
+            echo json_encode($response);
+        }
+
         exit;
     }
 

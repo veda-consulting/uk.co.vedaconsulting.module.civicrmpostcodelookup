@@ -5,19 +5,20 @@
   <description>Extension to enable postcode lookup feature in CiviCRM using AFD, Civipostcode, Experian or PostcodeAnywhere.</description>
   <license>AGPL-3.0</license>
   <maintainer>
-    <author>Parvez</author>
+    <author>Parvez Saleh</author>
     <email>parvez@vedaconsulting.co.uk</email>
   </maintainer>
   <urls>
-    <url desc="Main Extension Page">http://www.vedaconsulting.co.uk</url>
-    <url desc="Documentation">http://www.vedaconsulting.co.uk</url>
-    <url desc="Support">http://www.vedaconsulting.co.uk</url>
+    <url desc="Main Extension Page">https://civicrm.org/extensions/postcode-lookup-civicrm</url>
+    <url desc="Documentation">https://github.com/veda-consulting/uk.co.vedaconsulting.module.civicrmpostcodelookup/blob/master/README.md</url>
+    <url desc="Support">https://github.com/veda-consulting/uk.co.vedaconsulting.module.civicrmpostcodelookup</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
   <releaseDate>2015-01-05</releaseDate>
-  <version>1.0.alpha1</version>
+  <version>1.0.alpha2</version>
   <develStage>alpha</develStage>
   <compatibility>
+    <ver>4.4</ver>
     <ver>4.5</ver>
   </compatibility>
   <comments>This module is under active development.</comments>

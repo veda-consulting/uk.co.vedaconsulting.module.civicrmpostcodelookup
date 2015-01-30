@@ -51,10 +51,38 @@ cj(document).ready(function() {
   }
 
   cj(function() {
+    var sourceUrl = CRM.url('civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/search', {"json": 1});
+
+    {/literal}{if $config->civiVersion < 4.5}{literal}
+
+    cj( postcodeElement ).autocomplete( sourceUrl, {
+        width: 400,
+        selectFirst: false,
+        minChars: minCharacters,
+        matchContains: true,
+        delay: 400,
+        max: 1000,
+        extraParams:{
+          term:function () {
+            return  cj( postcodeElement ).val();
+          },
+          number:function () {
+             return cj(houseElement).val();
+          }
+        }
+    }).result(function(event, data, formatted) {
+       findAddressValues(data[1], blockNo);
+       cj(postcodeElement).val('');
+       return false;
+    });
+
+    {/literal}{else}{literal}
+
     cj(postcodeElement).autocomplete({
-        source: '/civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/search',
+        source: sourceUrl,
         minLength: minCharacters,
         data: {postcode: cj( postcodeElement ).val(), number: cj(houseElement).val(), mode: '0'},
+        //max: {/literal}{crmSetting name="search_autocomplete_count" group="Search Preferences"}{literal},
         search: function( event, ui ) {
           cj('#loaderimage_'+blockNo).show();
         },
@@ -76,6 +104,9 @@ cj(document).ready(function() {
             cj(".ui-autocomplete").css("z-index", 1000);
         }
     });
+
+    {/literal}{/if}{literal}
+
   });
 });
 
@@ -86,10 +117,11 @@ function addslashes (str) {
 function findAddressValues(id , blockNo) {
   cj('#loaderimage_'+blockNo).show();
   setAddressFields(false, blockNo);
+  var sourceUrl = CRM.url('civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/get', {"json": 1});
   cj.ajax({
     dataType: 'json',
     data: {id: id},
-    url: '{/literal}{$config->userFrameworkBaseURL}{literal}civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/get',
+    url: sourceUrl,
     success: function (data) {
       setAddressFields(data.address, blockNo);
       setAddressFields(true, blockNo);
@@ -142,18 +174,18 @@ function setAddressFields(address, blockNo) {
 
 {if !empty($form.address.$blockId.street_address)}
    <tr id="streetAddress_{$blockId}">
-   	<td colspan="2">
-			{$form.address.$blockId.street_address.label} {help id="id-street-address" file="CRM/Contact/Form/Contact.hlp"}<br />
-			{$form.address.$blockId.street_address.html}
-		  {if $parseStreetAddress eq 1 && ($action eq 1 || $action eq 2)}
+    <td colspan="2">
+      {$form.address.$blockId.street_address.label} {help id="id-street-address" file="CRM/Contact/Form/Contact.hlp"}<br />
+      {$form.address.$blockId.street_address.html}
+      {if $parseStreetAddress eq 1 && ($action eq 1 || $action eq 2)}
           &nbsp;&nbsp;<a href="#" title="{ts}Edit Address Elements{/ts}" onClick="processAddressFields( 'addressElements' , '{$blockId}', 1 );return false;">{ts}Edit Address Elements{/ts}</a>
           {help id="id-edit-street-elements" file="CRM/Contact/Form/Contact.hlp"}
       {/if}
-  	</td>
-	</tr>
+    </td>
+  </tr>
 
   {if $parseStreetAddress eq 1 && ($action eq 1 || $action eq 2)}
-		<tr id="addressElements_{$blockId}" class=hiddenElement>
+    <tr id="addressElements_{$blockId}" class=hiddenElement>
       <td>
          {$form.address.$blockId.street_number.label}<br />
          {$form.address.$blockId.street_number.html}
@@ -165,13 +197,13 @@ function setAddressFields(address, blockNo) {
       </td>
 
       <td colspan="2">
-      	{$form.address.$blockId.street_unit.label}<br />
+        {$form.address.$blockId.street_unit.label}<br />
         {$form.address.$blockId.street_unit.html}
         <a href="#" title="{ts}Edit Street Address{/ts}" onClick="processAddressFields( 'streetAddress', '{$blockId}', 1 );return false;">{ts}Edit Complete Street Address{/ts}</a>
         {help id="id-edit-complete-street" file="CRM/Contact/Form/Contact.hlp"}
       </td>
     </tr>
-	{/if}
+  {/if}
 
 {if $parseStreetAddress eq 1}
 {literal}
