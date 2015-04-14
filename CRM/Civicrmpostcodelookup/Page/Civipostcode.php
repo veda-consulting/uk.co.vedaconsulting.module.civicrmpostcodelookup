@@ -56,7 +56,12 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
 		$simpleJSONData = json_decode($data);
 
 		if (!empty($simpleJSONData)) {
-			$addresslist = self::getAddressList($simpleJSONData, $postcode);
+			if ($simpleJSONData->is_error == 1) {
+				$addresslist[0]['value'] = '';
+				$addresslist[0]['label'] = $simpleJSONData->error;
+			} else {
+				$addresslist = self::getAddressList($simpleJSONData, $postcode);
+			}
 		}
 
 		// highlight search results
