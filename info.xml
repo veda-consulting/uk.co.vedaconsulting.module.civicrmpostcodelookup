@@ -21,7 +21,7 @@
     <ver>4.4</ver>
     <ver>4.5</ver>
   </compatibility>
-  <comments>Sponsored by ZING. Developed by Veda NFP Consulting LTD.</comments>
+  <comments>Developed by Veda NFP Consulting LTD.</comments>
   <civix>
     <namespace>CRM/Civicrmpostcodelookup</namespace>
   </civix>
