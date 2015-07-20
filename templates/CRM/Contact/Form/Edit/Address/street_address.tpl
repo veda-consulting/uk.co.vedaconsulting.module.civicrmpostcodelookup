@@ -33,6 +33,9 @@
 </tr>
 
 {literal}
+<style type="text/css">
+ .ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}       
+</style>
 <script type="text/javascript">
 var info = []; //Needed to access data from outside the JSON processing function
 cj(document).ready(function() {
@@ -84,15 +87,15 @@ cj(document).ready(function() {
         data: {postcode: cj( postcodeElement ).val(), number: cj(houseElement).val(), mode: '0'},
         //max: {/literal}{crmSetting name="search_autocomplete_count" group="Search Preferences"}{literal},
         search: function( event, ui ) {
-          cj('#loaderimage_'+blockNo).show();
+          //cj('#loaderimage_'+blockNo).show();
         },
         response: function( event, ui ) {
-          cj('#loaderimage_'+blockNo).hide();
+          //cj('#loaderimage_'+blockNo).hide();
         },
         select: function(event, ui) {
           if (ui.item.id != '') {
             findAddressValues(ui.item.id, blockNo);
-            cj('#loaderimage_'+blockNo).show();
+            //cj('#loaderimage_'+blockNo).show();
           }
           return false;
         },
@@ -162,8 +165,9 @@ function setAddressFields(address, blockNo) {
          cj(cityElement).val('');
          cj(postcodeElement).val('');
 
-         cj(streetAddressElement).val(address.street);
-         cj(AddstreetAddressElement).val(address.locality);
+         cj(streetAddressElement).val(address.street_address);
+         cj(AddstreetAddressElement).val(address.supplemental_address_1);
+         cj(AddstreetAddressElement1).val(address.supplemental_address_2);
          cj(cityElement).val(address.town);
          cj(postcodeElement).val(address.postcode);
      }

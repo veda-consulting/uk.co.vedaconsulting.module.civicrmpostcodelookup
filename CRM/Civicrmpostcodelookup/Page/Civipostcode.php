@@ -86,15 +86,7 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
 		$addressRow = array();
 		$AddressListItem = $simpleJSONData->results;
 		foreach ($AddressListItem as $key => $addressItem) {
-			$addressLineArray = array();
-			$addressLineArray[] = $addressItem->building_number;
-			$addressLineArray[] = $addressItem->organisation_name;
-			$addressLineArray[] = $addressItem->building_name;
-			$addressLineArray[] = $addressItem->sub_building_name;
-			$addressLineArray[] = $addressItem->thoroughfare_descriptor;
-			$addressLineArray[] = $addressItem->post_town;
-			$addressLineArray[] = $addressItem->postcode;
-
+			$addressLineArray = self::formatAddressLines($addressItem, TRUE);
 			$addressLineArray = array_filter($addressLineArray);
 
 			$addressRow["id"] = (string) $addressItem->id;
@@ -140,40 +132,57 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
 		$filetoparse = fopen("$querystring","r") or die("Error reading JSON data.");
 		$data = stream_get_contents($filetoparse);
 		$simpleJSONData = json_decode($data);
+		$addressObj = $simpleJSONData->results[0];
 
-		$address = array('id' => $moniker);
-		$addressItem = $simpleJSONData->results[0];
-
-		$addressLineArray = $addressLine1Array = array();
-
-
-		//$addressLineArray[] = (string) $addressItem->organisation_name;
-		//$addressLineArray[] = (string) $addressItem->building_name;
-
-		if (!empty($addressItem->organisation_name)) {
-			$addressLineArray[] = (string) $addressItem->organisation_name;
-		} else {
-			$addressLineArray[] = (string) $addressItem->building_number;
-			$addressLineArray[] = (string) $addressItem->thoroughfare_descriptor;
-		}
-
-		$addressLineArray = array_filter($addressLineArray);
-		$address["street"] = @implode(' ', $addressLineArray);
-
-		//$addressLine1Array[] = (string) $addressItem->sub_building_name;
-		if (!empty($addressItem->organisation_name)) {
-			$addressLine1Array[] = (string) $addressItem->building_number;
-			$addressLine1Array[] = (string) $addressItem->building_name;
-			$addressLine1Array[] = (string) $addressItem->thoroughfare_descriptor;
-		}
-		$addressLine1Array = array_filter($addressLine1Array);
-		$address["locality"] = @implode(' ', $addressLine1Array);
-
-		$address["town"] = (string) $addressItem->post_town;
-		$address["postcode"] = (string) $addressItem->postcode;
-
+		$address = self::formatAddressLines($addressObj);
+		
 		##Close the JSON source##
 		fclose($filetoparse);
+
+		return $address;
+	}
+
+	private static function formatAddressLines($addressObj, $forList = FALSE) {
+		if (empty($addressObj)) {
+			return;
+		}
+
+		// Format address lines based on Royal Mail PAF address assembler (https://github.com/AllenJB/PafUtils)
+		require_once 'CRM/PafUtils/Address.php';
+		$addressLineObj = new Address();
+        $addressLineObj->setUdprn()
+        	->setPostCode($addressObj->postcode)
+            ->setPostTown($addressObj->post_town)
+            ->setDependentLocality($addressObj->dependent_locality)
+            ->setDoubleDependentLocality($addressObj->double_dependent_locality)
+            ->setThoroughfare($addressObj->thoroughfare_descriptor)
+            ->setDependentThoroughfare($addressObj->dependent_thoroughfare_descriptor)
+            ->setBuildingNumber($addressObj->building_number)
+            ->setBuildingName($addressObj->building_name)
+            ->setSubBuildingName($addressObj->sub_building_name)
+            ->setPoBox($addressObj->po_box)
+            ->setDepartmentName($addressObj->department_name)
+            ->setOrganizationName($addressObj->organisation_name)
+            ->setPostcodeType($addressObj->postcode_type)
+            ->setSuOrganizationIndicator($addressObj->su_organisation_indicator)
+            ->setDeliveryPointSuffix($addressObj->delivery_point_suffix);
+        $addressLines = $addressLineObj->getAddressLines();
+        
+        if ($forList == FALSE) {
+			$address = array('id' => $addressObj->id);
+		}
+		
+		if (!empty($addressLines[0])) {
+			$address["street_address"] = $addressLines[0];
+		}
+		if (!empty($addressLines[1])) {
+			$address["supplemental_address_1"] = $addressLines[1];
+		}
+		if (!empty($addressLines[2])) {
+			$address["supplemental_address_2"] = $addressLines[2];
+		}
+		$address["town"] = (string) $addressObj->post_town;
+		$address["postcode"] = (string) $addressObj->postcode;
 
 		return $address;
 	}

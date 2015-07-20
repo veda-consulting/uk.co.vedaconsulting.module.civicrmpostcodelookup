@@ -1,11 +1,14 @@
 {literal}
+<style type="text/css">
+ .ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}       
+</style>
 <script type="text/javascript">
 cj(document).ready(function(){
   if (cj('#editrow-street_address-Primary').length > 0  ) {
        var blockId = 'Primary';
        var blockNo = 'Primary';
        var targetHtml = '';
-       var postCodeHtml = '<div class="crm-section addressLookup form-item"><div class="label"><label for="addressLookup">Search for an address</label></div><div class="edit-value content"><div class="postcodelookup-textbox-wrapper"><input placeholder="Start typing a postcode" name="inputPostCode_' + blockId + '" id ="inputPostCode_' + blockId + '"></div><div class="loader-image"><img id="loaderimage_' + blockId + '" src="{/literal}{$config->resourceBase}{literal}i/loading.gif" style="width:15px;height:15px; display: none" /></div></div><div class="clear"></div></div>';
+       var postCodeHtml = '<div class="crm-section addressLookup form-item"><div class="label"><label for="addressLookup">Search for an address</label></div><div class="edit-value content"><div class="postcodelookup-textbox-wrapper"><input placeholder="Start typing a postcode" name="inputPostCode_' + blockId + '" id ="inputPostCode_' + blockId + '" style="width: 25em;"></div><div class="loader-image"><img id="loaderimage_' + blockId + '" src="{/literal}{$config->resourceBase}{literal}i/loading.gif" style="width:15px;height:15px; display: none" /></div></div><div class="clear"></div></div>';
        cj('#editrow-street_address-Primary').before(postCodeHtml);
     }
 
@@ -14,9 +17,22 @@ cj(document).ready(function(){
        var blockNo = '5';
        var targetHtml = '';
        var divHtml = cj('#editrow-street_address-5').html();
-       var postCodeHtml = '<div class="crm-section addressLookup form-item"><div class="label"><label for="addressLookup">Search for an address</label></div><div class="edit-value content"><div class="postcodelookup-textbox-wrapper"><input placeholder="Start typing a postcode" name="inputPostCode_' + blockId + '" id ="inputPostCode_' + blockId + '"></div><div class="loader-image"><img id="loaderimage_' + blockId + '" src="{/literal}{$config->resourceBase}{literal}i/loading.gif" style="width:15px;height:15px; display: none" /></div></div><div class="clear"></div></div>';
+       var postCodeHtml = '<div class="crm-section addressLookup form-item"><div class="label"><label for="addressLookup">Search for an address</label></div><div class="edit-value content"><div class="postcodelookup-textbox-wrapper"><input placeholder="Start typing a postcode" name="inputPostCode_' + blockId + '" id ="inputPostCode_' + blockId + '" style="width: 25em;"></div><div class="loader-image"><img id="loaderimage_' + blockId + '" src="{/literal}{$config->resourceBase}{literal}i/loading.gif" style="width:15px;height:15px; display: none" /></div></div><div class="clear"></div></div>';
        cj('#editrow-street_address-5').before(postCodeHtml);
     }
+
+    // Include lookup in billing section as well
+    if (cj('#billing_street_address-5').length > 0 ) {
+       var billingblockId = '5';
+       var billingblockNo = '5';
+       var billingtargetHtml = '';
+       var billingdivHtml = cj('#billing_street_address-5').html();
+       var billingpostCodeHtml = '<div class="crm-section addressLookup form-item"><div class="label"><label for="addressLookup">Search for an address</label></div><div class="edit-value content"><div class="postcodelookup-textbox-wrapper"><input placeholder="Start typing a postcode" name="inputPostCodeBillingSection_' + billingblockId + '" id ="inputPostCodeBillingSection_' + billingblockId + '" style="width: 25em;"></div><div class="loader-image"><img id="loaderimage_' + billingblockId + '" src="{/literal}{$config->resourceBase}{literal}i/loading.gif" style="width:15px;height:15px; display: none" /></div></div><div class="clear"></div></div>';
+       cj('.billing_street_address-5-section').before(billingpostCodeHtml);
+
+       var billingPostcodeElement = '#inputPostCodeBillingSection_'+billingblockNo;
+    }
+
 
   var buttonElement = '#postcodeLookupButton_'+blockNo;
   var houseElement = '#inputNumber_'+blockNo;
@@ -52,10 +68,34 @@ cj(document).ready(function(){
           }
         }
     }).result(function(event, data, formatted) {
-       findAddressValues(data[1], blockNo);
+       findAddressValues(data[1], blockNo, blockPrefix = '');
        cj(postcodeElement).val('');
        return false;
     });
+
+    // Postcode lookup in billing section
+    if (cj('#billing_street_address-5').length > 0 ) {
+      cj( billingPostcodeElement ).autocomplete( sourceUrl, {
+          width: 400,
+          selectFirst: false,
+          minChars: minCharacters,
+          matchContains: true,
+          delay: 400,
+          max: 1000,
+          extraParams:{
+            term:function () {
+              return cj( billingPostcodeElement ).val();
+            },
+            number:function () {
+               return cj(houseElement).val();
+            }
+          }
+      }).result(function(event, data, formatted) {
+         findAddressValues(data[1], '5', blockPrefix = 'billing_');
+         cj(billingPostcodeElement).val('');
+         return false;
+      });
+    }
 
     {/literal}{else}{literal}
 
@@ -64,15 +104,15 @@ cj(document).ready(function(){
       minLength: minCharacters,
       data: {postcode: cj( postcodeElement ).val(), number: cj(houseElement).val(), mode: '0'},
       search: function( event, ui ) {
-        cj('#loaderimage_'+blockNo).show();
+        //cj('#loaderimage_'+blockNo).show();
       },
       response: function( event, ui ) {
-        cj('#loaderimage_'+blockNo).hide();
+        //cj('#loaderimage_'+blockNo).hide();
       },
       select: function(event, ui) {
         if (ui.item.id != '') {
-          findAddressValues(ui.item.id, blockNo);
-          cj('#loaderimage_'+blockNo).show();
+          findAddressValues(ui.item.id, blockNo, blockPrefix = '');
+          //cj('#loaderimage_'+blockNo).show();
         }
         return false;
       },
@@ -85,33 +125,62 @@ cj(document).ready(function(){
       }
     });
 
+    // Postcode lookup in billing section
+    if (cj('#billing_street_address-5').length > 0 ) {
+      cj(billingPostcodeElement).autocomplete({
+        source: sourceUrl,
+        minLength: minCharacters,
+        data: {postcode: cj( billingPostcodeElement ).val(), number: cj(houseElement).val(), mode: '0'},
+        search: function( event, ui ) {
+          //cj('#loaderimage_'+blockNo).show();
+        },
+        response: function( event, ui ) {
+          //cj('#loaderimage_'+blockNo).hide();
+        },
+        select: function(event, ui) {
+          if (ui.item.id != '') {
+            findAddressValues(ui.item.id, '5', blockPrefix = 'billing_');
+            //cj('#loaderimage_'+blockNo).show();
+          }
+          return false;
+        },
+
+        html: true, // optional (jquery.ui.autocomplete.html.js required)
+
+        //optional (if other layers overlap autocomplete list)
+        open: function(event, ui) {
+          cj(".ui-autocomplete").css("z-index", 1000);
+        }
+      });
+    }
+
     {/literal}{/if}{literal}
 
   });
 });
 
-function findAddressValues(id , blockNo) {
+function findAddressValues(id , blockNo, blockPrefix) {
   cj('#loaderimage_'+blockNo).show();
-  setAddressFields(false, blockNo);
+  setAddressFields(false, blockNo, blockPrefix);
   var sourceUrl = CRM.url('civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/get', {"json": 1});
   cj.ajax({
     dataType: 'json',
     data: {id: id, mode: '0'},
     url: sourceUrl,
     success: function (data) {
-      setAddressFields(data.address, blockNo);
-      setAddressFields(true, blockNo);
+      setAddressFields(data.address, blockNo, blockPrefix);
+      setAddressFields(true, blockNo, blockPrefix);
       cj('#loaderimage_'+blockNo).hide();
     }
   });
 }
 
-function setAddressFields(address, blockNo) {
-   var postcodeElement = '#postal_code-'+ blockNo;
-   var streetAddressElement = '#street_address-'+ blockNo;
-   var AddstreetAddressElement = '#supplemental_address_1-'+ blockNo;
-   var AddstreetAddressElement1 = '#supplemental_address_2-'+ blockNo;
-   var cityElement = '#city-'+ blockNo;
+function setAddressFields(address, blockNo, blockPrefix) {
+   var postcodeElement = '#' + blockPrefix + 'postal_code-'+ blockNo;
+   var streetAddressElement = '#' + blockPrefix + 'street_address-'+ blockNo;
+   var AddstreetAddressElement = '#' + blockPrefix + 'supplemental_address_1-'+ blockNo;
+   var AddstreetAddressElement1 = '#' + blockPrefix + 'supplemental_address_2-'+ blockNo;
+   var cityElement = '#' + blockPrefix + 'city-'+ blockNo;
 
    var allFields = {
     postcode: postcodeElement,
@@ -138,8 +207,9 @@ function setAddressFields(address, blockNo) {
     cj(cityElement).val('');
     cj(postcodeElement).val('');
 
-    cj(streetAddressElement).val(address.street);
-    cj(AddstreetAddressElement).val(address.locality);
+    cj(streetAddressElement).val(address.street_address);
+    cj(AddstreetAddressElement).val(address.supplemental_address_1);
+    cj(AddstreetAddressElement1).val(address.supplemental_address_2);
     cj(cityElement).val(address.town);
     cj(postcodeElement).val(address.postcode);
   }
