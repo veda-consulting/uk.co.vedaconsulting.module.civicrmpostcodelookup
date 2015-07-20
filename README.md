@@ -19,7 +19,7 @@ For having postcode lookup feature in CiviCRM backend and Front end profiles.
 ### Usage ###
 
 * For backend, postcode lookup features is automatically enabled for address fields when adding/editing contacts and configuring event location.
-* For front end profiles, postcode lookup feature is enabled only if 'Street Address' field of type 'Primary' or 'Billing' is added to the profile.
+* For front end profiles, postcode lookup feature is enabled only if 'Street Address' field of type 'Primary' or 'Billing' is added to the profile. Include 'Supplemental Address 1' and 'Supplemental Address 2' fields in the profile for address lines based on the rules in the Royal Mail programmers guide.
 
 ### Support ###
 
