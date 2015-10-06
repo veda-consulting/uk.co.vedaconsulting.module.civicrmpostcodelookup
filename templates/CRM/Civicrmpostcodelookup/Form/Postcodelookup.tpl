@@ -181,6 +181,7 @@ function setAddressFields(address, blockNo, blockPrefix) {
    var AddstreetAddressElement = '#' + blockPrefix + 'supplemental_address_1-'+ blockNo;
    var AddstreetAddressElement1 = '#' + blockPrefix + 'supplemental_address_2-'+ blockNo;
    var cityElement = '#' + blockPrefix + 'city-'+ blockNo;
+   var countyElement = '#address_'+ blockNo +'_state_province_id';
 
    var allFields = {
     postcode: postcodeElement,
@@ -206,12 +207,16 @@ function setAddressFields(address, blockNo, blockPrefix) {
     cj(AddstreetAddressElement1).val('');
     cj(cityElement).val('');
     cj(postcodeElement).val('');
+    cj(countyElement).val('');
 
     cj(streetAddressElement).val(address.street_address);
     cj(AddstreetAddressElement).val(address.supplemental_address_1);
     cj(AddstreetAddressElement1).val(address.supplemental_address_2);
     cj(cityElement).val(address.town);
     cj(postcodeElement).val(address.postcode);
+    if(typeof(address.state_province_id) != "undefined" && address.state_province_id !== null) {
+       cj(countyElement).val(address.state_province_id).trigger("change");
+     }
   }
 }
 </script>
