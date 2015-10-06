@@ -107,6 +107,10 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Core_Page {
 	}
 
 	private static function getAddressByMoniker($moniker) {
+
+		// Get state/county
+		$states = CRM_Core_PseudoConstant::stateProvince();
+
 		$querystring = self::getPostcodeAnywhereCredentials(2);
 		$querystring = $querystring . "&Id=" . urlencode($moniker);
 
@@ -116,18 +120,25 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Core_Page {
 		$address = array('id' => $moniker);
 		$addressItemRow = (array) $simpleXMLData->Rows;
 		$addressItem = (array) $addressItemRow['Row'];
-
+		
 		$addressLineArray[] = $addressItem['@attributes']['Company'];
+		$addressLineArray[] = $addressItem['@attributes']['DeliveryPointSuffix'];
 		$addressLineArray[] = $addressItem['@attributes']['BuildingNumber'];
 		$addressLineArray[] = $addressItem['@attributes']['PrimaryStreet'];
 		$addressLineArray = array_filter($addressLineArray);
-		$address["street"] = @implode(', ', $addressLineArray);
+		$address["street_address"] = @implode(', ', $addressLineArray);
 
-		$address["locality"] = $addressItem['@attributes']['SecondaryStreet'];
+		$address["supplemental_address_1"] = $addressItem['@attributes']['SecondaryStreet'];
+		$address["supplemental_address_2"] = $addressItem['@attributes']['DependentLocality'];
 
 		$address["town"] = $addressItem['@attributes']['PostTown'];
 
 		$address["postcode"] = $addressItem['@attributes']['Postcode'];
+
+		$address["state_province_id"] = '';
+		if ($stateId = array_search($addressItem['@attributes']['County'], $states)) {
+			$address["state_province_id"] = $stateId;
+		}
 
 		return $address;
 	}
