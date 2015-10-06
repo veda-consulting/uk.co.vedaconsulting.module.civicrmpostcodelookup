@@ -122,7 +122,7 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Core_Page {
 		$addressItem = (array) $addressItemRow['Row'];
 		
 		$addressLineArray[] = $addressItem['@attributes']['Company'];
-		$addressLineArray[] = $addressItem['@attributes']['DeliveryPointSuffix'];
+		$addressLineArray[] = $addressItem['@attributes']['BuildingName'];
 		$addressLineArray[] = $addressItem['@attributes']['BuildingNumber'];
 		$addressLineArray[] = $addressItem['@attributes']['PrimaryStreet'];
 		$addressLineArray = array_filter($addressLineArray);
