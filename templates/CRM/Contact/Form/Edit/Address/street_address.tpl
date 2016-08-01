@@ -1,6 +1,6 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.5                                                |
+ | CiviCRM version 4.7                                                |
  +--------------------------------------------------------------------+
  | Copyright CiviCRM LLC (c) 2004-2014                                |
  +--------------------------------------------------------------------+
@@ -34,7 +34,7 @@
 
 {literal}
 <style type="text/css">
- .ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}       
+ .ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}
 </style>
 <script type="text/javascript">
 var info = []; //Needed to access data from outside the JSON processing function
@@ -47,16 +47,16 @@ cj(document).ready(function() {
   var addressResultsElement = '#addressResults_'+blockNo;
   var minCharacters = 4;
 
-  var postcodeProvider = '{/literal}{$config->CiviPostCodeLookupProvider}{literal}';
+  var postcodeProvider = '{/literal}{$civiPostCodeLookupProvider}{literal}';
   if (postcodeProvider !== 'civipostcode') {
     cj(postcodeElement).attr("placeholder", "Type full postcode to find addresses");
     minCharacters = 5;
   }
 
   cj(function() {
-    var sourceUrl = CRM.url('civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/search', {"json": 1});
+    var sourceUrl = CRM.url('civicrm/{/literal}{$civiPostCodeLookupProvider}{literal}/ajax/search', {"json": 1});
 
-    {/literal}{if $config->civiVersion < 4.5}{literal}
+    {/literal}{if $civiVersion < 4.5}{literal}
 
     cj( postcodeElement ).autocomplete( sourceUrl, {
         width: 400,
@@ -120,7 +120,7 @@ function addslashes (str) {
 function findAddressValues(id , blockNo) {
   cj('#loaderimage_'+blockNo).show();
   setAddressFields(false, blockNo);
-  var sourceUrl = CRM.url('civicrm/{/literal}{$config->CiviPostCodeLookupProvider}{literal}/ajax/get', {"json": 1});
+  var sourceUrl = CRM.url('civicrm/{/literal}{$civiPostCodeLookupProvider}{literal}/ajax/get', {"json": 1});
   cj.ajax({
     dataType: 'json',
     data: {id: id},

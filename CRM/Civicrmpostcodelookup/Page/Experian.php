@@ -66,8 +66,9 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Core_Page {
             $response['address'] = $address;
         }
 
-        $config = CRM_Core_Config::singleton();
-        if ($config->civiVersion < 4.5) {
+        // Check CiviCRM version & return result as appropriate
+        $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
+        if ($civiVersion < 4.5) {
             foreach ($response as $key => $val) {
                 echo "{$val['label']}|{$val['id']}\n";
             }

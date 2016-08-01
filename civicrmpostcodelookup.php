@@ -17,10 +17,6 @@ $GLOBALS["providers"] = array(
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
  */
 function civicrmpostcodelookup_civicrm_config(&$config) {
-  $settingsStr = CRM_Core_BAO_Setting::getItem('CiviCRM Postcode Lookup', 'api_details');
-  $settingsArray = unserialize($settingsStr);
-  $config->CiviPostCodeLookupProvider = $settingsArray['provider'];
-
   _civicrmpostcodelookup_civix_civicrm_config($config);
 }
 
@@ -163,6 +159,15 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
     $formName == 'CRM_Contribute_Form_Contribution_Main' ||
     $formName == 'CRM_Event_Form_ManageEvent_Location'
   ) {
+    // Assign the postcode lookup provider to form, so that we can call the related function in AJAX
+    $settingsStr = CRM_Core_BAO_Setting::getItem('CiviCRM Postcode Lookup', 'api_details');
+    $settingsArray = unserialize($settingsStr);
+    $form->assign('civiPostCodeLookupProvider', $settingsArray['provider']);
+
+    // Get CiviCRM version
+    $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
+    $form->assign('civiVersion', $civiVersion);
+
     require_once 'CRM/Core/Resources.php';
     CRM_Core_Resources::singleton()
       ->addScriptFile('uk.co.vedaconsulting.module.civicrmpostcodelookup', 'js/jquery.ui.autocomplete.html.js', 110, 'html-header', FALSE)

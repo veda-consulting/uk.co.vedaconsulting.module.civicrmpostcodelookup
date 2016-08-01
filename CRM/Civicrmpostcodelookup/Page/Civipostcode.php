@@ -70,8 +70,9 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
 		##Close the JSON source##
 		fclose($filetoparse);
 
-		$config = CRM_Core_Config::singleton();
-		if ($config->civiVersion < 4.5) {
+		// Check CiviCRM version & return result as appropriate
+		$civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
+		if ($civiVersion < 4.5) {
 			foreach ($addresslist as $key => $val) {
         echo "{$val['label']}|{$val['id']}\n";
       }
@@ -135,7 +136,7 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
 		$addressObj = $simpleJSONData->results[0];
 
 		$address = self::formatAddressLines($addressObj);
-		
+
 		##Close the JSON source##
 		fclose($filetoparse);
 
@@ -167,11 +168,11 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
             ->setSuOrganizationIndicator($addressObj->su_organisation_indicator)
             ->setDeliveryPointSuffix($addressObj->delivery_point_suffix);
         $addressLines = $addressLineObj->getAddressLines();
-        
+
         if ($forList == FALSE) {
 			$address = array('id' => $addressObj->id);
 		}
-		
+
 		if (!empty($addressLines[0])) {
 			$address["street_address"] = $addressLines[0];
 		}
