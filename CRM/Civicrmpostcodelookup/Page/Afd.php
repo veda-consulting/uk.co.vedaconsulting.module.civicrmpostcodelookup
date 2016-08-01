@@ -63,8 +63,9 @@ class CRM_Civicrmpostcodelookup_Page_Afd extends CRM_Core_Page {
 		##Close the XML source##
 		fclose($filetoparse);
 
-		$config = CRM_Core_Config::singleton();
-		if ($config->civiVersion < 4.5) {
+		// Check CiviCRM version & return result as appropriate
+		$civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
+		if ($civiVersion < 4.5) {
 			foreach ($addresslist as $key => $val) {
         echo "{$val['label']}|{$val['id']}\n";
       }

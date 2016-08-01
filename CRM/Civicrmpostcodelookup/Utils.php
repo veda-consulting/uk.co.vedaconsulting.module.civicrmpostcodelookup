@@ -102,4 +102,15 @@ class CRM_Civicrmpostcodelookup_Utils {
     }
     return $a_json;
   }
+
+  /*
+   * Get CiviCRM version using SQL
+   * Using function to get version is not compatible with all versions
+   */
+  public static function getCiviVersion() {
+    $sql = "SELECT version FROM civicrm_domain";
+    $dao = CRM_Core_DAO::executeQuery($sql);
+    $dao->fetch();
+    return $dao->version;
+  }
 }

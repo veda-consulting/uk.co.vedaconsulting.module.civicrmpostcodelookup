@@ -53,8 +53,9 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Core_Page {
 			$addresslist = self::getAddressList($simpleXMLData, $postcode);
 		}
 
-		$config = CRM_Core_Config::singleton();
-		if ($config->civiVersion < 4.5) {
+		// Check CiviCRM version & return result as appropriate
+		$civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
+		if ($civiVersion < 4.5) {
 			foreach ($addresslist as $key => $val) {
         echo "{$val['label']}|{$val['id']}\n";
       }
@@ -120,7 +121,7 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Core_Page {
 		$address = array('id' => $moniker);
 		$addressItemRow = (array) $simpleXMLData->Rows;
 		$addressItem = (array) $addressItemRow['Row'];
-		
+
 		$addressLineArray[] = $addressItem['@attributes']['Company'];
 		$addressLineArray[] = $addressItem['@attributes']['BuildingName'];
 		$addressLineArray[] = $addressItem['@attributes']['BuildingNumber'];
