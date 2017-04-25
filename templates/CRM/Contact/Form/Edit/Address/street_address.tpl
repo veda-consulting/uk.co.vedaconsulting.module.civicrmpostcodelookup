@@ -23,7 +23,7 @@
  | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
  +--------------------------------------------------------------------+
 *}
-
+{if $civiPostCodeLookupProvider}
 <tr id="addressLookup">
   <td colspan="2">
     <label for="addressLookup">Search for an address</label><br>
@@ -259,6 +259,7 @@ function processAddressFields( name, blockId, loadData ) {
 
 </script>
 {/literal}
+{/if}
 {/if}
 {/if}
 

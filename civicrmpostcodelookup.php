@@ -157,7 +157,8 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
     $formName == 'CRM_Profile_Form_Edit' ||
     $formName == 'CRM_Event_Form_Registration_Register' ||
     $formName == 'CRM_Contribute_Form_Contribution_Main' ||
-    $formName == 'CRM_Event_Form_ManageEvent_Location'
+    $formName == 'CRM_Event_Form_ManageEvent_Location' ||
+    $formName == 'CRM_Contact_Form_Inline_Address'
   ) {
     // Assign the postcode lookup provider to form, so that we can call the related function in AJAX
     $settingsStr = CRM_Core_BAO_Setting::getItem('CiviCRM Postcode Lookup', 'api_details');
