@@ -153,17 +153,27 @@ function civicrmpostcodelookup_civicrm_navigationMenu( &$params ) {
 }
 
 function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
-  if ($formName == 'CRM_Contact_Form_Contact' ||
-    $formName == 'CRM_Profile_Form_Edit' ||
-    $formName == 'CRM_Event_Form_Registration_Register' ||
-    $formName == 'CRM_Contribute_Form_Contribution_Main' ||
-    $formName == 'CRM_Event_Form_ManageEvent_Location'
-  ) {
+  $postCodeLookupPages = array(
+    'CRM_Contact_Form_Contact'
+    , 'CRM_Contact_Form_Inline_Address'
+    , 'CRM_Profile_Form_Edit'
+    , 'CRM_Event_Form_Registration_Register'
+    , 'CRM_Contribute_Form_Contribution_Main'
+    , 'CRM_Event_Form_ManageEvent_Location'
+    , 'CRM_Financial_Form_Payment'
+  );
+  if (in_array($formName, $postCodeLookupPages)) {
     // Assign the postcode lookup provider to form, so that we can call the related function in AJAX
     $settingsStr = CRM_Core_BAO_Setting::getItem('CiviCRM Postcode Lookup', 'api_details');
     $settingsArray = unserialize($settingsStr);
     $form->assign('civiPostCodeLookupProvider', $settingsArray['provider']);
 
+    //MV#4367, assign location types value from settings to tpl/js
+    if (!empty($settingsArray['location_type_id'])) {
+      $form->assign('civiPostCodeLookupLocationType', $settingsArray['location_type_id']);
+      $form->assign('civiPostCodeLookupLocationTypeJson', json_encode($settingsArray['location_type_id']));
+    }
+    
     // Get CiviCRM version
     $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
     $form->assign('civiVersion', $civiVersion);
