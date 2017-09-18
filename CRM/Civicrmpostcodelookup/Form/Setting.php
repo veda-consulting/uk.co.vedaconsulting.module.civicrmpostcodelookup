@@ -68,6 +68,15 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       false
     );
 
+    //MV#4367 Location Types
+    $locationTypes = array_flip(CRM_Core_PseudoConstant::get('CRM_Core_DAO_Address', 'location_type_id'));
+
+    $this->addCheckBox('location_type_id',
+     ts('Location Types'),
+      $locationTypes,
+      NULL, NULL, NULL, NULL,
+      array('&nbsp;&nbsp;')
+    );
 
     $this->addButtons(array(
       array(
@@ -169,6 +178,11 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       $settingsArray['username'] = $values['username'];
     }
 
+    //MV#4367 amend Location Types into settings
+    if (!empty($values['location_type_id']))  {
+      $settingsArray['location_type_id'] = $values['location_type_id'];
+    }
+    
     $settingsStr = serialize($settingsArray);
 
     CRM_Core_BAO_Setting::setItem($settingsStr,

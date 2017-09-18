@@ -4,6 +4,9 @@
 </style>
 <script type="text/javascript">
 cj(document).ready(function(){
+  var locationTypes = {/literal}{$civiPostCodeLookupLocationTypeJson}{literal};
+  var blockId = '';
+  var blockNo = '';  
   if (cj('#editrow-street_address-Primary').length > 0  ) {
        var blockId = 'Primary';
        var blockNo = 'Primary';
@@ -32,7 +35,19 @@ cj(document).ready(function(){
 
        var billingPostcodeElement = '#inputPostCodeBillingSection_'+billingblockNo;
     }
-
+    //Location Types from settings
+    if (locationTypes) {
+      cj.each(locationTypes, function (id, index) {
+        if (cj('#editrow-street_address-'+ id).length > 0 ) {
+         blockId = id;
+         blockNo = id;
+         var targetHtml = '';
+         // var divHtml = cj('#editrow-street_address-'+ id).html();
+         var postCodeHtml = '<div class="crm-section addressLookup form-item"><div class="label"><label for="addressLookup">Search for an address</label></div><div class="edit-value content"><div class="postcodelookup-textbox-wrapper"><input placeholder="Start typing a postcode" name="inputPostCode_' + blockId + '" id ="inputPostCode_' + blockId + '" style="width: 25em;"></div><div class="loader-image"><img id="loaderimage_' + blockId + '" src="{/literal}{$config->resourceBase}{literal}i/loading.gif" style="width:15px;height:15px; display: none" /></div></div><div class="clear"></div></div>';
+         cj('#editrow-street_address-'+ id).before(postCodeHtml);
+        }
+      });
+    }
 
   var buttonElement = '#postcodeLookupButton_'+blockNo;
   var houseElement = '#inputNumber_'+blockNo;

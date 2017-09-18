@@ -151,7 +151,7 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
 		// Format address lines based on Royal Mail PAF address assembler (https://github.com/AllenJB/PafUtils)
 		require_once 'CRM/PafUtils/Address.php';
 		$addressLineObj = new Address();
-        $addressLineObj->setUdprn()
+        $addressLineObj->setUdprn($addressObj->udprn)
         	->setPostCode($addressObj->postcode)
             ->setPostTown($addressObj->post_town)
             ->setDependentLocality($addressObj->dependent_locality)
