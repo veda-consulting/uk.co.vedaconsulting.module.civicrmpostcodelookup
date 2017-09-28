@@ -4,7 +4,7 @@
 </style>
 <script type="text/javascript">
 cj(document).ready(function(){
-  var locationTypes = {/literal}{$civiPostCodeLookupLocationTypeJson}{literal};
+  var locationTypes = {/literal}{if $civiPostCodeLookupLocationTypeJson}{$civiPostCodeLookupLocationTypeJson}{else}''{/if}{literal};
   var blockId = '';
   var blockNo = '';  
   if (cj('#editrow-street_address-Primary').length > 0  ) {
