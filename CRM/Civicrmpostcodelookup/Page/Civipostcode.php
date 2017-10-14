@@ -40,7 +40,7 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Civicrmpostcodeloo
 	 * Function to get address list based on a Post code
 	 */
 	public static function search() {
-		$postcode = self::getPostcode();
+		$postcode = self::getPostcode(TRUE);
 		$number = CRM_Utils_Request::retrieve('number', 'String', $this, false);
 
 		$querystring = self::getCivipostcodeCredentials(1);

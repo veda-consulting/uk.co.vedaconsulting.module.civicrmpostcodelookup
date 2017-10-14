@@ -41,7 +41,7 @@ class CRM_Civicrmpostcodelookup_Page_Afd extends CRM_Civicrmpostcodelookup_Page_
 	 * Function to get address list based on a Post code
 	 */
 	public static function search() {
-		$postcode = self::getPostcode();
+		$postcode = self::getPostcode(TRUE); // FIXME: Check whether API requires space or not
 		$number = CRM_Utils_Request::retrieve('number', 'String', $this, false);
 
 		$querystring = self::getAFDCredentials(1);

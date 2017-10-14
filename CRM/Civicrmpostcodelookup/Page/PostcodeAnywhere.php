@@ -41,6 +41,7 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Civicrmpostcod
 	 * Function to get address list based on a Post code
 	 */
 	public static function search() {
+	  // PostcodeAnywhere API works with postcodes when they have a space and when they don't.
 		$postcode = self::getPostcode();
 
 		$querystring = self::getPostcodeAnywhereCredentials(1);
