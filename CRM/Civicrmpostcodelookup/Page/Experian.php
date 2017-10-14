@@ -5,7 +5,7 @@ require_once 'CRM/Core/Page.php';
 // Access the QAS library via the  dependency 'llr_qas_library' module
 require_once '/lib/QASCapture.php';
 
-class CRM_PostcodeLookup_Page_Ajax extends CRM_Core_Page {
+class CRM_PostcodeLookup_Page_Ajax extends CRM_Civicrmpostcodelookup_Page_Postcode {
     static private $qacampture;
 
     public static function getQasCredentials($account_type) {
@@ -43,7 +43,7 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Core_Page {
     }
 
     public static function search() {
-        $postcode = CRM_Utils_Request::retrieve('term', 'String', $this, true);
+        $postcode = self::getPostcode();
         $number = CRM_Utils_Request::retrieve('number', 'String', $this, true);
 
         $qaCapture = self::getQACapture();

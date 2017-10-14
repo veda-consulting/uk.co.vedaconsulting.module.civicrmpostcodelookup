@@ -46,6 +46,7 @@ cj(document).ready(function() {
   var addressResultElement = '#addressResult_'+blockNo;
   var addressResultsElement = '#addressResults_'+blockNo;
   var minCharacters = 4;
+  var delay = 200;
 
   var postcodeProvider = '{/literal}{$civiPostCodeLookupProvider}{literal}';
   if (postcodeProvider !== 'civipostcode') {
@@ -63,7 +64,7 @@ cj(document).ready(function() {
         selectFirst: false,
         minChars: minCharacters,
         matchContains: true,
-        delay: 400,
+        delay: delay,
         max: 1000,
         extraParams:{
           term:function () {
@@ -84,18 +85,19 @@ cj(document).ready(function() {
     cj(postcodeElement).autocomplete({
         source: sourceUrl,
         minLength: minCharacters,
+        delay: delay,
         data: {postcode: cj( postcodeElement ).val(), number: cj(houseElement).val(), mode: '0'},
         //max: {/literal}{crmSetting name="search_autocomplete_count" group="Search Preferences"}{literal},
         search: function( event, ui ) {
-          //cj('#loaderimage_'+blockNo).show();
+          cj('#loaderimage_'+blockNo).show();
         },
         response: function( event, ui ) {
-          //cj('#loaderimage_'+blockNo).hide();
+          cj('#loaderimage_'+blockNo).hide();
         },
         select: function(event, ui) {
           if (ui.item.id != '') {
             findAddressValues(ui.item.id, blockNo);
-            //cj('#loaderimage_'+blockNo).show();
+            cj('#loaderimage_'+blockNo).show();
           }
           return false;
         },
