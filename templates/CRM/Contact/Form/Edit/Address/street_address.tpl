@@ -175,8 +175,9 @@ function setAddressFields(address, blockNo) {
          cj(cityElement).val(address.town);
          cj(postcodeElement).val(address.postcode);
          if(typeof(address.state_province_id) != "undefined" && address.state_province_id !== null) {
-           cj(countyElement).val(address.state_province_id).trigger("change");
+           cj(countyElement).val(address.state_province_id);
          }
+         cj(countyElement).trigger("change");
      }
 }
 
