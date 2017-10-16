@@ -55,6 +55,7 @@ cj(document).ready(function(){
   var addressResultElement = '#addressResult_'+blockNo;
   var addressResultsElement = '#addressResults_'+blockNo;
   var minCharacters = 4;
+  var delay = 200;
 
   var postcodeProvider = '{/literal}{$civiPostCodeLookupProvider}{literal}';
   if (postcodeProvider !== 'civipostcode') {
@@ -72,7 +73,7 @@ cj(document).ready(function(){
         selectFirst: false,
         minChars: minCharacters,
         matchContains: true,
-        delay: 400,
+        delay: delay,
         max: 1000,
         extraParams:{
           term:function () {
@@ -95,7 +96,7 @@ cj(document).ready(function(){
           selectFirst: false,
           minChars: minCharacters,
           matchContains: true,
-          delay: 400,
+          delay: delay,
           max: 1000,
           extraParams:{
             term:function () {
@@ -119,15 +120,15 @@ cj(document).ready(function(){
       minLength: minCharacters,
       data: {postcode: cj( postcodeElement ).val(), number: cj(houseElement).val(), mode: '0'},
       search: function( event, ui ) {
-        //cj('#loaderimage_'+blockNo).show();
+        cj('#loaderimage_'+blockNo).show();
       },
       response: function( event, ui ) {
-        //cj('#loaderimage_'+blockNo).hide();
+        cj('#loaderimage_'+blockNo).hide();
       },
       select: function(event, ui) {
         if (ui.item.id != '') {
           findAddressValues(ui.item.id, blockNo, blockPrefix = '');
-          //cj('#loaderimage_'+blockNo).show();
+          cj('#loaderimage_'+blockNo).show();
         }
         return false;
       },
@@ -147,15 +148,15 @@ cj(document).ready(function(){
         minLength: minCharacters,
         data: {postcode: cj( billingPostcodeElement ).val(), number: cj(houseElement).val(), mode: '0'},
         search: function( event, ui ) {
-          //cj('#loaderimage_'+blockNo).show();
+          cj('#loaderimage_'+blockNo).show();
         },
         response: function( event, ui ) {
-          //cj('#loaderimage_'+blockNo).hide();
+          cj('#loaderimage_'+blockNo).hide();
         },
         select: function(event, ui) {
           if (ui.item.id != '') {
             findAddressValues(ui.item.id, '5', blockPrefix = 'billing_');
-            //cj('#loaderimage_'+blockNo).show();
+            cj('#loaderimage_'+blockNo).show();
           }
           return false;
         },
@@ -230,8 +231,9 @@ function setAddressFields(address, blockNo, blockPrefix) {
     cj(cityElement).val(address.town);
     cj(postcodeElement).val(address.postcode);
     if(typeof(address.state_province_id) != "undefined" && address.state_province_id !== null) {
-       cj(countyElement).val(address.state_province_id).trigger("change");
-     }
+       cj(countyElement).val(address.state_province_id);
+    }
+    cj(countyElement).trigger("change");
   }
 }
 </script>

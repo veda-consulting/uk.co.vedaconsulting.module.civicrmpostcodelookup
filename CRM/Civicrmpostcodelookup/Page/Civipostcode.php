@@ -2,7 +2,7 @@
 
 require_once 'CRM/Core/Page.php';
 
-class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
+class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Civicrmpostcodelookup_Page_Postcode {
 
 	/*
 	 * Function to get the Server URL and login credentials
@@ -40,7 +40,7 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Core_Page {
 	 * Function to get address list based on a Post code
 	 */
 	public static function search() {
-		$postcode = CRM_Utils_Request::retrieve('term', 'String', $this, true);
+		$postcode = self::getPostcode(TRUE);
 		$number = CRM_Utils_Request::retrieve('number', 'String', $this, false);
 
 		$querystring = self::getCivipostcodeCredentials(1);
