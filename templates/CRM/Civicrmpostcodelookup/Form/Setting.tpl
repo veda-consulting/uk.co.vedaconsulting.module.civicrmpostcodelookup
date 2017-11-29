@@ -78,6 +78,12 @@ function showFields() {
     cj('#username').parent().parent().show();
     cj('#server').val('http://services.postcodeanywhere.co.uk');
   }
+
+  if (providerVal == 'getaddressio') {
+    cj('#server').parent().parent().show();
+    cj('#api_key').parent().parent().show();
+    cj('#server').val('https://api.getAddress.io');
+  }
 }
 </script>
 {/literal}
