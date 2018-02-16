@@ -184,3 +184,16 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
       ->addStyleFile('uk.co.vedaconsulting.module.civicrmpostcodelookup', 'css/civipostcode.css', 110, 'page-header');
   }
 }
+
+/**
+ * Implementation of hook_civicrm_permission
+ *
+ * @param array $permissions
+ * @return void
+ */
+function civicrmpostcodelookup_civicrm_permission(&$permissions) {
+  $prefix = ts('CiviCRM') . ': '; // name of extension or module
+  $permissions += array(
+    'access postcode lookup' => $prefix . ts('Access CiviCRM Postcode lookups'),
+  );
+}
