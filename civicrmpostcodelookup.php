@@ -161,6 +161,7 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
     , 'CRM_Contribute_Form_Contribution_Main'
     , 'CRM_Event_Form_ManageEvent_Location'
     , 'CRM_Financial_Form_Payment'
+    , 'CRM_Contact_Form_Domain'
   );
   if (in_array($formName, $postCodeLookupPages)) {
     // Assign the postcode lookup provider to form, so that we can call the related function in AJAX
