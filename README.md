@@ -10,6 +10,7 @@ For having postcode lookup feature in CiviCRM backend and Front end profiles.
 * [Civipostcode](http://civipostcode.com/)
 * [Experian](http://www.qas.co.uk)
 * [PostcodeAnywhere](http://www.postcodeanywhere.co.uk/)
+* [getAddress()](https://getaddress.io/)
 
 ### Installation ###
 

@@ -46,4 +46,14 @@
      <page_callback>CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere::getaddress</page_callback>
      <access_arguments>view event info</access_arguments>
   </item>
+  <item>
+     <path>civicrm/getaddressio/ajax/search</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_GetAddressIo::search</page_callback>
+     <access_arguments>access postcode lookup</access_arguments>
+  </item>
+  <item>
+     <path>civicrm/getaddressio/ajax/get</path>
+     <page_callback>CRM_Civicrmpostcodelookup_Page_GetAddressIo::getaddress</page_callback>
+     <access_arguments>access postcode lookup</access_arguments>
+  </item>
 </menu>
