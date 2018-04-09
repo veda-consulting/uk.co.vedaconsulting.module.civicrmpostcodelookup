@@ -197,7 +197,7 @@ function setAddressFields(address, blockNo, blockPrefix) {
    var AddstreetAddressElement = '#' + blockPrefix + 'supplemental_address_1-'+ blockNo;
    var AddstreetAddressElement1 = '#' + blockPrefix + 'supplemental_address_2-'+ blockNo;
    var cityElement = '#' + blockPrefix + 'city-'+ blockNo;
-   var countyElement = '#address_'+ blockNo +'_state_province_id';
+   var countyElement = '#' + blockPrefix +'state_province_id-'+ blockNo;
 
    var allFields = {
     postcode: postcodeElement,
