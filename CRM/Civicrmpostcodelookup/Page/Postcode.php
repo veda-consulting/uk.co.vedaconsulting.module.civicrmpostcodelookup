@@ -11,7 +11,7 @@ abstract class CRM_Civicrmpostcodelookup_Page_Postcode extends CRM_Core_Page {
    * @return string
    */
   protected static function getPostcode($space = FALSE) {
-    $postcode = CRM_Utils_Request::retrieve('term', 'String', $this, true);
+    $postcode = CRM_Utils_Request::retrieve('term', 'String');
     return self::format($postcode, $space);
   }
 

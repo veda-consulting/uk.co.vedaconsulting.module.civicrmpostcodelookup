@@ -41,7 +41,7 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Civicrmpostcodeloo
 	 */
 	public static function search() {
 		$postcode = self::getPostcode(TRUE);
-		$number = CRM_Utils_Request::retrieve('number', 'String', $this, false);
+		$number = CRM_Utils_Request::retrieve('number', 'String');
 
 		$querystring = self::getCivipostcodeCredentials(1);
 		$querystring = $querystring . "&postcode=" . urlencode($postcode) . "&property=" . $number;
@@ -110,7 +110,10 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Civicrmpostcodeloo
 	 * Function to get address details based on the Civipostcode address id
 	 */
 	public static function getaddress() {
-		$moniker = CRM_Utils_Request::retrieve('id', 'String', $this, true);
+    $moniker = CRM_Utils_Request::retrieve('id', 'String');
+    if (empty($moniker)) {
+      exit;
+    }
 
 		$address = self::getAddressByMoniker($moniker);
 		$response = array(

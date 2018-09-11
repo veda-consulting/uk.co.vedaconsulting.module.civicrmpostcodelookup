@@ -18,7 +18,7 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
     if (!self::isValidPostcode($postcode)) {
       exit;
     }
-    $number = CRM_Utils_Request::retrieve('number', 'String', $this, FALSE);
+    $number = CRM_Utils_Request::retrieve('number', 'String');
     $apiUrl = self::getAddressIoApiUrl($postcode, $number);
     // get address result from getAddress.io
     $addressData = self::addressAPIResult($apiUrl);
@@ -47,10 +47,8 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
    * Function to get address details based on the selected address
    */
   public static function getaddress() {
-    try {
-      $selectedId = CRM_Utils_Request::retrieve('id', 'String', $this, TRUE, NULL, 'REQUEST', TRUE);
-    }
-    catch (CRM_Core_Exception $e) {
+    $selectedId = CRM_Utils_Request::retrieve('id', 'String');
+    if (empty($selectedId)) {
       exit;
     }
 
