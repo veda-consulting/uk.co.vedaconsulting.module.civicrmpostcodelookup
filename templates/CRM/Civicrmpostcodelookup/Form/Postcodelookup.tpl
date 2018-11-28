@@ -186,6 +186,8 @@ function findAddressValues(id , blockNo, blockPrefix) {
     success: function (data) {
       setAddressFields(data.address, blockNo, blockPrefix);
       setAddressFields(true, blockNo, blockPrefix);
+    },
+    complete: function (data) {
       cj('#loaderimage_'+blockNo).hide();
     }
   });
