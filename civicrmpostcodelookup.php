@@ -9,6 +9,7 @@ $GLOBALS["providers"] = array(
       'civipostcode' => 'CiviPostcode',
       'experian' => 'Experian',
       'postcodeanywhere' => 'PostcodeAnywhere',
+      'getaddressio'  => 'GetAddress'
       );
 
 /**
@@ -174,7 +175,7 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
       $form->assign('civiPostCodeLookupLocationType', $settingsArray['location_type_id']);
       $form->assign('civiPostCodeLookupLocationTypeJson', json_encode($settingsArray['location_type_id']));
     }
-    
+
     // Get CiviCRM version
     $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
     $form->assign('civiVersion', $civiVersion);

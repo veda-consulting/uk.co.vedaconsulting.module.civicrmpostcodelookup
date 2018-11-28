@@ -143,6 +143,16 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       }
     }
 
+    // Check all mandatory values are entered for getAddressio
+    if ($values['provider'] == 'getaddressio') {
+      if (empty($values['server'])) {
+        $errors['server'] = ts( "Server URL is mandatory." );
+      }
+      if (empty($values['api_key'])) {
+        $errors['api_key'] = ts( "API Key is mandatory." );
+      }
+    }
+
     return $errors;
   }
 
@@ -178,11 +188,17 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       $settingsArray['username'] = $values['username'];
     }
 
+    // GetAddress.io
+    if ($values['provider'] =='getaddressio')  {
+      $settingsArray['server'] = $values['server'];
+      $settingsArray['api_key'] = $values['api_key'];
+    }
+
     //MV#4367 amend Location Types into settings
     if (!empty($values['location_type_id']))  {
       $settingsArray['location_type_id'] = $values['location_type_id'];
     }
-    
+
     $settingsStr = serialize($settingsArray);
 
     CRM_Core_BAO_Setting::setItem($settingsStr,
