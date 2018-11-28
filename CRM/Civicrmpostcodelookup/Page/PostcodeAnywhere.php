@@ -97,7 +97,10 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Civicrmpostcod
 	 * Function to get address details based on the PostcodeAnywhere addressid/postkey
 	 */
 	public static function getaddress() {
-		$moniker = CRM_Utils_Request::retrieve('id', 'String', $this, true);
+    $moniker = CRM_Utils_Request::retrieve('id', 'String');
+    if (empty($moniker)) {
+      exit;
+    }
 
 		$address = self::getAddressByMoniker($moniker);
 		$response = array(

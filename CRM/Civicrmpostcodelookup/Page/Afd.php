@@ -42,7 +42,7 @@ class CRM_Civicrmpostcodelookup_Page_Afd extends CRM_Civicrmpostcodelookup_Page_
 	 */
 	public static function search() {
 		$postcode = self::getPostcode(TRUE); // FIXME: Check whether API requires space or not
-		$number = CRM_Utils_Request::retrieve('number', 'String', $this, false);
+		$number = CRM_Utils_Request::retrieve('number', 'String');
 
 		$querystring = self::getAFDCredentials(1);
 		$querystring = $querystring . "&postcode=" . $postcode . "&property=" . $number;
@@ -95,7 +95,10 @@ class CRM_Civicrmpostcodelookup_Page_Afd extends CRM_Civicrmpostcodelookup_Page_
 	 * Function to get address details based on the AFD addressid/postkey
 	 */
 	public static function getaddress() {
-		$moniker = CRM_Utils_Request::retrieve('id', 'String', $this, true);
+    $moniker = CRM_Utils_Request::retrieve('id', 'String');
+    if (empty($moniker)) {
+      exit;
+    }
 
 		$address = self::getAddressByMoniker($moniker);
 		$response = array(

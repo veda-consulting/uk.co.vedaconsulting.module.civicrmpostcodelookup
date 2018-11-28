@@ -44,7 +44,10 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Civicrmpostcodelookup_Page_Postco
 
     public static function search() {
         $postcode = self::getPostcode(TRUE); // FIXME: Check whether API requires space or not
-        $number = CRM_Utils_Request::retrieve('number', 'String', $this, true);
+        $number = CRM_Utils_Request::retrieve('number', 'String');
+        if (!$number) {
+          exit;
+        }
 
         $qaCapture = self::getQACapture();
         $ret = $qaCapture->Search("$number, $postcode", 'GBR', 'Singleline', true);//, $intensity, $promptset, $threshold, $timeout, $layout, $formattedAddressInPicklist, $requestTag, $localisation)
@@ -80,7 +83,10 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Civicrmpostcodelookup_Page_Postco
     }
 
     public static function getaddress() {
-        $moniker = CRM_Utils_Request::retrieve('id', 'String', $this, true);
+      $moniker = CRM_Utils_Request::retrieve('id', 'String');
+      if (empty($moniker)) {
+        exit;
+      }
 
         $address = self::getAddressByMoniker($moniker);
         $response = array(
@@ -94,7 +100,10 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Civicrmpostcodelookup_Page_Postco
     private static function getQACapture() {
         if(self::$qacampture === null) {
             // @todo retrieved value should be encoded somehow, MD5 or whatever
-            $mode = CRM_Utils_Request::retrieve('mode', 'String', $this, TRUE, '1');
+            $mode = CRM_Utils_Request::retrieve('mode', 'String');
+            if (!$mode) {
+              $mode = '1';
+            }
             $params = self::getQasCredentials($mode);
             self::$qacampture = new QASCapture($params);
         }
