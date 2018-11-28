@@ -140,7 +140,7 @@ function civicrmpostcodelookup_civicrm_navigationMenu( &$params ) {
       'attributes' => array (
         'label'      => 'Postcode Lookup',
         'name'       => 'Postcode Lookup',
-        'url'        => 'civicrm/postcodelookup/settings?reset=1',
+        'url'        => 'civicrm/admin/postcodelookup/settings?reset=1',
         'permission' => 'administer CiviCRM',
         'operator'   => NULL,
         'separator'  => TRUE,

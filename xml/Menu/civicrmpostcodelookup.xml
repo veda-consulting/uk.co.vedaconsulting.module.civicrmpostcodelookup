@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <menu>
   <item>
-    <path>civicrm/postcodelookup/settings</path>
+    <path>civicrm/admin/postcodelookup/settings</path>
     <page_callback>CRM_Civicrmpostcodelookup_Form_Setting</page_callback>
     <title>Postcode Lookup - Settings</title>
     <access_arguments>administer CiviCRM</access_arguments>
