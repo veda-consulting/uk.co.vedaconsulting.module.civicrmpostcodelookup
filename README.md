@@ -17,7 +17,11 @@ For having postcode lookup feature in CiviCRM backend and Front end profiles.
 * Install the extension manually in CiviCRM. More details [here](http://wiki.civicrm.org/confluence/display/CRMDOC/Extensions#Extensions-Installinganewextension) about installing extensions in CiviCRM.
 * Configure postcode lookup provider details in Administer >> Postcode Lookup(civicrm/admin/postcodelookup/settings?reset=1)
 
-#### Integration with Drupal Webform
+### Permissions ###
+
+**From version 1.6 you need to give the `Access CiviCRM Postcode lookups` permission to anyone who can do postcode lookups (eg. anonymous user).**  Previously the permission required was `Access CiviEvent`.
+
+### Integration with Drupal Webform
 This drupal module provides integration with Drupal Webform: https://github.com/compucorp/webform_civicrm_postcode
 
 ### Usage ###
