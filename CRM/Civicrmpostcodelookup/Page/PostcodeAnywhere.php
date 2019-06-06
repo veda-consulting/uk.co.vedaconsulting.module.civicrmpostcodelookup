@@ -54,21 +54,13 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Civicrmpostcod
       $addresslist = self::getAddressList($simpleXMLData, $postcode);
     }
 
-    // Check CiviCRM version & return result as appropriate
-    $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
-    if ($civiVersion < 4.5) {
-      foreach ($addresslist as $key => $val) {
-        echo "{$val['label']}|{$val['id']}\n";
-      }
-    } else {
-      echo json_encode($addresslist);
-    }
+    echo json_encode($addresslist);
     exit;
   }
 
   private static function getAddressList($simpleXMLData, $postcode) {
-    $addressList = array();
-    $addressRow = array();
+    $addressList = [];
+    $addressRow = [];
     $AddressListItem = (array) $simpleXMLData->Rows;
     $AddressListItems = $AddressListItem['Row'];
 
@@ -103,9 +95,9 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Civicrmpostcod
     }
 
     $address = self::getAddressByMoniker($moniker);
-    $response = array(
+    $response = [
       'address' => $address
-    );
+    ];
 
     echo json_encode($response);
     exit;
@@ -122,7 +114,7 @@ class CRM_Civicrmpostcodelookup_Page_PostcodeAnywhere extends CRM_Civicrmpostcod
     //Make the request to Postcode Anywhere and parse the XML returned
     $simpleXMLData = simplexml_load_file($querystring);
 
-    $address = array('id' => $moniker);
+    $address = ['id' => $moniker];
     $addressItemRow = (array) $simpleXMLData->Rows;
     $addressItem = (array) $addressItemRow['Row'];
 

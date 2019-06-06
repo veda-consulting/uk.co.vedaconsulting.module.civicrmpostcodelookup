@@ -63,21 +63,13 @@ class CRM_Civicrmpostcodelookup_Page_Afd extends CRM_Civicrmpostcodelookup_Page_
     ##Close the XML source##
     fclose($filetoparse);
 
-    // Check CiviCRM version & return result as appropriate
-    $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
-    if ($civiVersion < 4.5) {
-      foreach ($addresslist as $key => $val) {
-        echo "{$val['label']}|{$val['id']}\n";
-      }
-    } else {
-      echo json_encode($addresslist);
-    }
+    echo json_encode($addresslist);
     exit;
   }
 
   private static function getAddressList($simpleXMLData, $postcode) {
-    $addressList = array();
-    $addressRow = array();
+    $addressList = [];
+    $addressRow = [];
     $AddressListItem = $simpleXMLData->AddressListItem;
     foreach ($AddressListItem as $key => $addressItem) {
       $addressRow["id"] = (string) $addressItem->PostKey;
@@ -101,9 +93,9 @@ class CRM_Civicrmpostcodelookup_Page_Afd extends CRM_Civicrmpostcodelookup_Page_
     }
 
     $address = self::getAddressByMoniker($moniker);
-    $response = array(
+    $response = [
       'address' => $address
-    );
+    ];
 
     echo json_encode($response);
     exit;
@@ -122,7 +114,7 @@ class CRM_Civicrmpostcodelookup_Page_Afd extends CRM_Civicrmpostcodelookup_Page_
     $data = stream_get_contents($filetoparse);
     $simpleXMLData = simplexml_load_string($data);
 
-    $address = array('id' => $moniker);
+    $address = ['id' => $moniker];
     $addressItem = (array) $simpleXMLData->Address;
 
     $address["street"] = empty($addressItem['Street']) ? '':$addressItem['Street'];

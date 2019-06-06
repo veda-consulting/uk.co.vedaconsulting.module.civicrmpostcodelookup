@@ -70,21 +70,13 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Civicrmpostcodeloo
     ##Close the JSON source##
     fclose($filetoparse);
 
-    // Check CiviCRM version & return result as appropriate
-    $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
-    if ($civiVersion < 4.5) {
-      foreach ($addresslist as $key => $val) {
-        echo "{$val['label']}|{$val['id']}\n";
-      }
-    } else {
-      echo json_encode($addresslist);
-    }
+    echo json_encode($addresslist);
     exit;
   }
 
   private static function getAddressList($simpleJSONData, $postcode) {
-    $addressList = array();
-    $addressRow = array();
+    $addressList = [];
+    $addressRow = [];
     $AddressListItem = $simpleJSONData->results;
     foreach ($AddressListItem as $key => $addressItem) {
       $addressLineArray = self::formatAddressLines($addressItem, TRUE);
@@ -116,9 +108,9 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Civicrmpostcodeloo
     }
 
     $address = self::getAddressByMoniker($moniker);
-    $response = array(
+    $response = [
       'address' => $address
-    );
+    ];
 
     echo json_encode($response);
     exit;
@@ -173,7 +165,7 @@ class CRM_Civicrmpostcodelookup_Page_Civipostcode extends CRM_Civicrmpostcodeloo
     $addressLines = $addressLineObj->getAddressLines();
 
     if ($forList == FALSE) {
-      $address = array('id' => $addressObj->id);
+      $address = ['id' => $addressObj->id];
     }
 
     if (!empty($addressLines[0])) {

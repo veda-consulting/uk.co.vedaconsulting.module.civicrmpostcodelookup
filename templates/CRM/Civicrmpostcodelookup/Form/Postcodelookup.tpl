@@ -66,55 +66,6 @@
     cj(function() {
       var sourceUrl = CRM.url('civicrm/{/literal}{$civiPostCodeLookupProvider}{literal}/ajax/search', {"json": 1});
 
-      {/literal}{if $civiVersion < 4.5}{literal}
-
-      cj( postcodeElement ).autocomplete( sourceUrl, {
-        width: 400,
-        selectFirst: false,
-        minChars: minCharacters,
-        matchContains: true,
-        delay: delay,
-        max: 1000,
-        extraParams:{
-          term:function () {
-            return cj( postcodeElement ).val();
-          },
-          number:function () {
-            return cj(houseElement).val();
-          }
-        }
-      }).result(function(event, data, formatted) {
-        findAddressValues(data[1], blockNo, blockPrefix = '');
-        cj(postcodeElement).val('');
-        return false;
-      });
-
-      // Postcode lookup in billing section
-      if (cj('#billing_street_address-5').length > 0 ) {
-        cj( billingPostcodeElement ).autocomplete( sourceUrl, {
-          width: 400,
-          selectFirst: false,
-          minChars: minCharacters,
-          matchContains: true,
-          delay: delay,
-          max: 1000,
-          extraParams:{
-            term:function () {
-              return cj( billingPostcodeElement ).val();
-            },
-            number:function () {
-              return cj(houseElement).val();
-            }
-          }
-        }).result(function(event, data, formatted) {
-          findAddressValues(data[1], '5', blockPrefix = 'billing_');
-          cj(billingPostcodeElement).val('');
-          return false;
-        });
-      }
-
-      {/literal}{else}{literal}
-
       cj(postcodeElement).autocomplete({
         source: sourceUrl,
         minLength: minCharacters,
@@ -169,8 +120,6 @@
           }
         });
       }
-
-      {/literal}{/if}{literal}
 
     });
   });

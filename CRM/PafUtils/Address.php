@@ -37,7 +37,7 @@ class Address
 
   protected $addressLines = null;
 
-  protected $assembleDebugFlags = array();
+  protected $assembleDebugFlags = [];
 
 
   public function __construct()
@@ -398,10 +398,10 @@ class Address
    */
   protected function assembleAddressLines()
   {
-    $this->assembleDebugFlags = array('errors' => array());
+    $this->assembleDebugFlags = ['errors' => []];
     $processed = false;
     $processingError = false;
-    $addressLines = array();
+    $addressLines = [];
 
     // Take copies of the building name and number
     // This allows us to manipulate their values (specifically for the split building name rules)
@@ -413,7 +413,7 @@ class Address
     }
 
     // Exception 4 regex: Any of the specified prefixes followed by either a number with an alpha suffix or a numeric range
-    $specialPrefixes = array(
+    $specialPrefixes = [
       'Back of',
       'Block',
       'Blocks',
@@ -429,7 +429,7 @@ class Address
       'Suites',
       'Unit',
       'Units',
-    );
+    ];
     $ex4Regex = '/^(' . join('|', $specialPrefixes) . ')\s([0-9]+[a-zA-Z]+|[0-9]+\-[0-9]+|[a-zA-Z])$/';
 
     if (strlen($buildingName)) {

@@ -58,7 +58,7 @@ class AddressLine
 
 		{
 
-			$this->DataplusGroup = array();
+			$this->DataplusGroup = [];
 
 			if (is_array($result->DataplusGroup))
 
@@ -252,7 +252,7 @@ class Dataset
 
 	{
 
-		$aResults = array();
+		$aResults = [];
 
 		
 
@@ -348,7 +348,7 @@ class ExampleAddress
 
 	{
 
-		$aResults = array();
+		$aResults = [];
 
 		
 
@@ -436,7 +436,7 @@ class FormattedAddress
 
 		{
 
-			$this->AddressLines = array();
+			$this->AddressLines = [];
 
 			if (is_array($result->AddressLine))
 
@@ -522,7 +522,7 @@ class Layout
 
 	{
 
-		$aResults = array();
+		$aResults = [];
 
 		
 
@@ -654,7 +654,7 @@ class LicensedSet
 
 	{
 
-		$aResults = array();
+		$aResults = [];
 
 		
 
@@ -780,7 +780,7 @@ class Picklist
 
 		{
 
-			$this->Items = array();
+			$this->Items = [];
 
 			if (is_array($results->PicklistEntry))
 
@@ -1014,7 +1014,7 @@ class PromptSet
 
 		{
 
-			$this->Lines = array();
+			$this->Lines = [];
 
 			if (is_array($results->Line))
 

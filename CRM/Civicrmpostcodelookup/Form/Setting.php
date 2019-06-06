@@ -28,7 +28,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       'text',
       'server',
       ts('Server URL'),
-      array('size' => 50),
+      ['size' => 50],
       true
     );
 
@@ -37,7 +37,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       'text',
       'api_key',
       ts('API Key'),
-      array('size' => 50),
+      ['size' => 50],
       false
     );
 
@@ -46,7 +46,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       'text',
       'serial_number',
       ts('Serial Number'),
-      array('size' => 20),
+      ['size' => 20],
       false
     );
 
@@ -55,7 +55,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       'text',
       'username',
       ts('Username'),
-      array('size' => 20),
+      ['size' => 20],
       false
     );
 
@@ -64,7 +64,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       'text',
       'password',
       ts('Password'),
-      array('size' => 20),
+      ['size' => 20],
       false
     );
 
@@ -75,20 +75,20 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       ts('Location Types'),
       $locationTypes,
       NULL, NULL, NULL, NULL,
-      array('&nbsp;&nbsp;')
+      ['&nbsp;&nbsp;']
     );
 
-    $this->addButtons(array(
-      array(
+    $this->addButtons([
+      [
         'type' => 'submit',
         'name' => ts('Submit'),
         'isDefault' => TRUE,
-      ),
-    ));
+      ],
+    ]);
 
     $this->setDefaults($settingsArray);
 
-    $this->addFormRule( array( 'CRM_Civicrmpostcodelookup_Form_Setting', 'formRule' ) );
+    $this->addFormRule( ['CRM_Civicrmpostcodelookup_Form_Setting', 'formRule']);
 
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
@@ -97,7 +97,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
 
   static function formRule( $values ){
 
-    $errors = array();
+    $errors = [];
 
     // Server is mandatory fo AFD and CiviPostcode. Server URL is in QAS lib for Experian
     if ($values['provider'] == 'afd' || $values['provider'] == 'civipostcode' || $values['provider'] == 'postcodeanywhere') {
@@ -159,7 +159,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
   function postProcess() {
     $values = $this->exportValues();
 
-    $settingsArray = array();
+    $settingsArray = [];
     $settingsArray['provider'] = $values['provider'];
 
     // AFD
@@ -211,9 +211,9 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
   }
 
   function getProviderOptions() {
-    $options = array(
+    $options = [
         '' => ts('- select -'),
-      ) + $GLOBALS["providers"];
+      ] + $GLOBALS["providers"];
 
     return $options;
   }
@@ -228,7 +228,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
     // auto-rendered in the loop -- such as "qfKey" and "buttons".  These
     // items don't have labels.  We'll identify renderable by filtering on
     // the 'label'.
-    $elementNames = array();
+    $elementNames = [];
     foreach ($this->_elements as $element) {
       /** @var HTML_QuickForm_Element $element */
       $label = $element->getLabel();

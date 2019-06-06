@@ -3,7 +3,7 @@
 class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodelookup_Page_Postcode {
 
   public static function isValidPostcode($postcode) {
-    if (in_array($postcode, array('XX200X', 'XX404X', 'XX400X', 'XX401X', 'XX429X', 'XX500X'))) {
+    if (in_array($postcode, ['XX200X', 'XX404X', 'XX400X', 'XX401X', 'XX429X', 'XX500X'])) {
       // A getAddressIo test postcode
       return TRUE;
     }
@@ -23,7 +23,7 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
     // get address result from getAddress.io
     $addressData = self::addressAPIResult($apiUrl);
 
-    $addresslist = array();
+    $addresslist = [];
     if ($addressData['is_error']) {
       $addresslist[0]['value'] = '';
       $addresslist[0]['label'] = CRM_Utils_Array::value('Message', $addressData, 'Error in fetching address');
@@ -31,15 +31,7 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
       $addresslist = self::getAddressList($addressData, $postcode);
     }
 
-    // Check CiviCRM version & return result as appropriate
-    $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
-    if ($civiVersion < 4.5) {
-      foreach ($addresslist as $key => $val) {
-        echo "{$val['label']}|{$val['id']}\n";
-      }
-    } else {
-      echo json_encode($addresslist);
-    }
+    echo json_encode($addresslist);
     exit;
   }
 
@@ -62,9 +54,9 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
     // get address result from getAddress.io
     $addressData = self::addressAPIResult($apiUrl);
 
-    $addresslist = array();
+    $addresslist = [];
     if ($addressData['is_error']) {
-      $address = array();
+      $address = [];
     } else {
       $addressItems = $addressData['addresses'];
 
@@ -76,9 +68,9 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
       $address['postcode'] = $postcode;
     }
 
-    $response = array(
+    $response = [
       'address' => $address
-    );
+    ];
 
     echo json_encode($response);
     exit;
@@ -123,7 +115,7 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
    * @return array
    */
   private static function addressAPIResult($apiUrl) {
-    $addressData = array();
+    $addressData = [];
 
     if (empty($apiUrl)) {
       $addressData['is_error'] = 1;
@@ -133,11 +125,11 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
 
     // Get the Address Data
     $curlSession = curl_init();
-    curl_setopt_array($curlSession, array(
+    curl_setopt_array($curlSession, [
       CURLOPT_RETURNTRANSFER => 1,
       CURLOPT_URL => $apiUrl,
       CURLOPT_USERAGENT => 'CiviCRM'
-    ));
+    ]);
 
     $result = curl_exec($curlSession);
     $header = curl_getinfo($curlSession);
@@ -190,8 +182,8 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
    * @return array
    */
   private static function getAddressList($addressData, $postcode) {
-    $addressList = array();
-    $addressRow = array();
+    $addressList = [];
+    $addressRow = [];
 
     // return, if adddressData/postcode is empty
     if (empty($addressData) || empty($postcode)) {
@@ -236,7 +228,7 @@ class CRM_Civicrmpostcodelookup_Page_GetAddressIo extends CRM_Civicrmpostcodeloo
     $addressLines = explode(', ', $addressItem);
 
     if ($forList == FALSE) {
-      $address = array('id' => $addressId);
+      $address = ['id' => $addressId];
     }
     if (!empty($addressLines[0])) {
       $address["street_address"] = $addressLines[0];

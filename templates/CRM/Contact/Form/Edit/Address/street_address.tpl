@@ -57,31 +57,6 @@
     cj(function() {
       var sourceUrl = CRM.url('civicrm/{/literal}{$civiPostCodeLookupProvider}{literal}/ajax/search', {"json": 1});
 
-      {/literal}{if $civiVersion < 4.5}{literal}
-
-      cj( postcodeElement ).autocomplete( sourceUrl, {
-        width: 400,
-        selectFirst: false,
-        minChars: minCharacters,
-        matchContains: true,
-        delay: delay,
-        max: 1000,
-        extraParams:{
-          term:function () {
-            return  cj( postcodeElement ).val();
-          },
-          number:function () {
-            return cj(houseElement).val();
-          }
-        }
-      }).result(function(event, data, formatted) {
-        findAddressValues(data[1], blockNo);
-        cj(postcodeElement).val('');
-        return false;
-      });
-
-      {/literal}{else}{literal}
-
       cj(postcodeElement).autocomplete({
         source: sourceUrl,
         minLength: minCharacters,
@@ -109,8 +84,6 @@
           cj(".ui-autocomplete").css("z-index", 1000);
         }
       });
-
-      {/literal}{/if}{literal}
 
     });
   });

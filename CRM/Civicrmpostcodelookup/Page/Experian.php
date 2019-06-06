@@ -9,7 +9,7 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Civicrmpostcodelookup_Page_Postco
   static private $qacampture;
 
   public static function getQasCredentials($account_type) {
-    $credentials = array();
+    $credentials = [];
 
     $settingsStr = CRM_Core_BAO_Setting::getItem('CiviCRM Postcode Lookup', 'api_details');
     $settingsArray = unserialize($settingsStr);
@@ -52,13 +52,13 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Civicrmpostcodelookup_Page_Postco
     $qaCapture = self::getQACapture();
     $ret = $qaCapture->Search("$number, $postcode", 'GBR', 'Singleline', true);//, $intensity, $promptset, $threshold, $timeout, $layout, $formattedAddressInPicklist, $requestTag, $localisation)
 
-    $response = array();
-    $response['items'] = array();
+    $response = [];
+    $response['items'] = [];
     foreach($ret->Picklist->Items as $item) {
-      $response['items'][] = array(
+      $response['items'][] = [
         'id' => $item->Moniker,
         'label' => $item->PartialAddress,
-      );
+      ];
     }
 
     //mzeman: get the address details if it's the precise one
@@ -69,16 +69,7 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Civicrmpostcodelookup_Page_Postco
       $response['address'] = $address;
     }
 
-    // Check CiviCRM version & return result as appropriate
-    $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
-    if ($civiVersion < 4.5) {
-      foreach ($response as $key => $val) {
-        echo "{$val['label']}|{$val['id']}\n";
-      }
-    } else {
-      echo json_encode($response);
-    }
-
+    echo json_encode($response);
     exit;
   }
 
@@ -89,9 +80,9 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Civicrmpostcodelookup_Page_Postco
     }
 
     $address = self::getAddressByMoniker($moniker);
-    $response = array(
+    $response = [
       'address' => $address
-    );
+    ];
 
     echo json_encode($response);
     exit;
@@ -114,7 +105,7 @@ class CRM_PostcodeLookup_Page_Ajax extends CRM_Civicrmpostcodelookup_Page_Postco
   private static function getAddressByMoniker($moniker) {
     $addressRet = self::getQACapture()->GetAddress($moniker);
 
-    $address = array('id' => $moniker);
+    $address = ['id' => $moniker];
     $lineCounter = 0;
     foreach($addressRet->AddressLines as $line) {
       switch($line->Label) {

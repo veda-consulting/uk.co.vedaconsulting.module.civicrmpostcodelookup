@@ -1,7 +1,7 @@
 <?php
 
 require_once 'civicrmpostcodelookup.civix.php';
-use CRM_Civigiftaid_ExtensionUtil as E;
+use CRM_Civicrmpostcodelookup_ExtensionUtil as E;
 
 // Postcode lookup providers
 // FIXME: Move this list to option values
@@ -158,10 +158,6 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
       $form->assign('civiPostCodeLookupLocationType', $settingsArray['location_type_id']);
       $form->assign('civiPostCodeLookupLocationTypeJson', json_encode($settingsArray['location_type_id']));
     }
-
-    // Get CiviCRM version
-    $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
-    $form->assign('civiVersion', $civiVersion);
 
     CRM_Core_Resources::singleton()
       ->addScriptFile(E::LONG_NAME, 'js/jquery.ui.autocomplete.html.js', 110, 'html-header', FALSE)

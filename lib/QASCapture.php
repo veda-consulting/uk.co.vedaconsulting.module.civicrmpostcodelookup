@@ -89,13 +89,16 @@ class QASCapture implements IQASCapture
 
 			$this->soap = new SoapClient($this->wsdl_file_url, 
 
-										 array('soap_version' => SOAP_1_2,
+										 [
+                       'soap_version' => SOAP_1_2,
 
 												 'exceptions' => 0,
 
-												 'classmap' => array('QAAuthentication' => 'QAAuthentication',
+												 'classmap' => [
+                           'QAAuthentication' => 'QAAuthentication',
 
-												 				     'QAQueryHeader' => 'QAQueryHeader'),
+												 				     'QAQueryHeader' => 'QAQueryHeader'
+                         ],
 
 												 'proxy_host' => CONTROL_PROXY_NAME,
 
@@ -105,7 +108,7 @@ class QASCapture implements IQASCapture
 
 												 'proxy_password' => CONTROL_PROXY_PASSWORD
 
-											   )
+                     ]
 
 										 );
 
@@ -117,15 +120,18 @@ class QASCapture implements IQASCapture
 
 			$this->soap = new SoapClient($this->wsdl_file_url, 
 
-										 array('soap_version' => SOAP_1_2,
+										 [
+                       'soap_version' => SOAP_1_2,
 
 												 'exceptions' => 0,
 
-												 'classmap' => array('QAAuthentication' => 'QAAuthentication',
+												 'classmap' => [
+                           'QAAuthentication' => 'QAAuthentication',
 
-												 				     'QAQueryHeader' => 'QAQueryHeader')
+												 				     'QAQueryHeader' => 'QAQueryHeader'
+                         ]
 
-											  )
+                     ]
 
 										 );			
 
@@ -163,7 +169,7 @@ class QASCapture implements IQASCapture
 
 		
 
-		$this->soap->__setSoapHeaders(array($authHeader));
+		$this->soap->__setSoapHeaders([$authHeader]);
 
 	}
 
@@ -223,7 +229,7 @@ class QASCapture implements IQASCapture
 
 	{
 
-		$engineOptions = array("_" => $engine, self::PARAM_FLATTEN => $flatten);
+		$engineOptions = ["_" => $engine, self::PARAM_FLATTEN => $flatten];
 
 		
 
@@ -257,7 +263,7 @@ class QASCapture implements IQASCapture
 
 		
 
-		$args = array(self::PARAM_COUNTRY => $countryId, self::PARAM_SEARCH => $search, self::PARAM_ENGINE => $engineOptions);
+		$args = [self::PARAM_COUNTRY => $countryId, self::PARAM_SEARCH => $search, self::PARAM_ENGINE => $engineOptions];
 
 		
 
@@ -315,7 +321,7 @@ class QASCapture implements IQASCapture
 
 	{
 
-		$args = array(self::PARAM_MONIKER => $moniker, self::PARAM_REFINEMENT => $refinement);
+		$args = [self::PARAM_MONIKER => $moniker, self::PARAM_REFINEMENT => $refinement];
 
 		
 
@@ -383,7 +389,7 @@ class QASCapture implements IQASCapture
 
 	{
 
-		$args = array(self::PARAM_LAYOUT => $layout, self::PARAM_MONIKER => $moniker);
+		$args = [self::PARAM_LAYOUT => $layout, self::PARAM_MONIKER => $moniker];
 
 		
 
@@ -487,7 +493,7 @@ class QASCapture implements IQASCapture
 
 			{
 
-				return array($result->LicensedSet);
+				return [$result->LicensedSet];
 
 			}
 
@@ -533,7 +539,7 @@ class QASCapture implements IQASCapture
 
 			{
 
-				return array($result->SystemInfo);
+				return [$result->SystemInfo];
 
 			}
 
@@ -557,7 +563,7 @@ class QASCapture implements IQASCapture
 
 	{
 
-		$args = array(self::PARAM_COUNTRY => $countryId);
+		$args = [self::PARAM_COUNTRY => $countryId];
 
 		
 
@@ -595,7 +601,7 @@ class QASCapture implements IQASCapture
 
 	{
 
-		$args = array(self::PARAM_COUNTRY => $countryId, self::PARAM_LAYOUT => $layout);
+		$args = [self::PARAM_COUNTRY => $countryId, self::PARAM_LAYOUT => $layout];
 
 		
 
@@ -645,7 +651,7 @@ class QASCapture implements IQASCapture
 
 	{
 
-		$args = array(self::PARAM_COUNTRY => $countryId);
+		$args = [self::PARAM_COUNTRY => $countryId];
 
 		
 
@@ -683,7 +689,7 @@ class QASCapture implements IQASCapture
 
 	{	
 
-		$args = array(self::PARAM_COUNTRY => $countryId, self::PARAM_PROMPTSET => $promptset, self::PARAM_ENGINE => $engine);
+		$args = [self::PARAM_COUNTRY => $countryId, self::PARAM_PROMPTSET => $promptset, self::PARAM_ENGINE => $engine];
 
 		
 
@@ -721,11 +727,11 @@ class QASCapture implements IQASCapture
 
 	{
 
-		$engineOptions = array("_" => $engine, self::PARAM_FLATTEN => $flatten, self::PARAM_PROMPTSET => $promptset);
+		$engineOptions = ["_" => $engine, self::PARAM_FLATTEN => $flatten, self::PARAM_PROMPTSET => $promptset];
 
 		
 
-		$args = array(self::PARAM_COUNTRY => $countryId, self::PARAM_ENGINE => $engineOptions, self::PARAM_FLATTEN => $flatten);
+		$args = [self::PARAM_COUNTRY => $countryId, self::PARAM_ENGINE => $engineOptions, self::PARAM_FLATTEN => $flatten];
 
 		
 
