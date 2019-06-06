@@ -1,16 +1,17 @@
 <?php
 
 require_once 'civicrmpostcodelookup.civix.php';
+use CRM_Civigiftaid_ExtensionUtil as E;
 
 // Postcode lookup providers
 // FIXME: Move this list to option values
-$GLOBALS["providers"] = array(
-      'afd' => 'AFD',
-      'civipostcode' => 'CiviPostcode',
-      'experian' => 'Experian',
-      'postcodeanywhere' => 'PostcodeAnywhere',
-      'getaddressio'  => 'GetAddress'
-      );
+$GLOBALS["providers"] = [
+  'afd' => 'AFD',
+  'civipostcode' => 'CiviPostcode',
+  'experian' => 'Experian',
+  'postcodeanywhere' => 'PostcodeAnywhere',
+  'getaddressio'  => 'GetAddress'
+];
 
 /**
  * Implementation of hook_civicrm_config
@@ -38,13 +39,7 @@ function civicrmpostcodelookup_civicrm_xmlMenu(&$files) {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
  */
 function civicrmpostcodelookup_civicrm_install() {
-
-  require_once 'CRM/Core/BAO/Setting.php';
-  CRM_Core_BAO_Setting::setItem('',
-          'CiviCRM Postcode Lookup',
-          'api_details'
-        );
-
+  CRM_Core_BAO_Setting::setItem('', 'CiviCRM Postcode Lookup', 'api_details');
   _civicrmpostcodelookup_civix_civicrm_install();
 }
 
@@ -126,35 +121,23 @@ function civicrmpostcodelookup_civicrm_alterSettingsFolders(&$metaDataFolders = 
 
 /**
  * Add navigation for Postcode Lookup under "Administer" menu
- *
- * @param $params associated array of navigation menus
  */
-function civicrmpostcodelookup_civicrm_navigationMenu( &$params ) {
-  // get the id of Administer Menu
-  $administerMenuId = CRM_Core_DAO::getFieldValue('CRM_Core_BAO_Navigation', 'Administer', 'id', 'name');
-
-  // skip adding menu if there is no administer menu
-  if ($administerMenuId) {
-    // get the maximum key under adminster menu
-    $maxKey = max( array_keys($params[$administerMenuId]['child']));
-    $params[$administerMenuId]['child'][$maxKey+1] =  array (
-      'attributes' => array (
-        'label'      => 'Postcode Lookup',
-        'name'       => 'Postcode Lookup',
-        'url'        => 'civicrm/admin/postcodelookup/settings?reset=1',
-        'permission' => 'administer CiviCRM',
-        'operator'   => NULL,
-        'separator'  => TRUE,
-        'parentID'   => $administerMenuId,
-        'navID'      => $maxKey+1,
-        'active'     => 1
-      )
-    );
-  }
+function civicrmpostcodelookup_civicrm_navigationMenu(&$menu) {
+  $item[] =  [
+    'label'      => E::ts('Postcode Lookup'),
+    'name'       => 'Postcode Lookup',
+    'url'        => 'civicrm/admin/postcodelookup/settings?reset=1',
+    'permission' => 'administer CiviCRM',
+    'operator'   => NULL,
+    'separator'  => TRUE,
+    'active'     => 1
+  ];
+  _civicrmpostcodelookup_civix_insert_navigation_menu($menu, 'Administer', $item[0]);
+  _civicrmpostcodelookup_civix_navigationMenu($menu);
 }
 
 function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
-  $postCodeLookupPages = array(
+  $postCodeLookupPages = [
     'CRM_Contact_Form_Contact'
     , 'CRM_Contact_Form_Inline_Address'
     , 'CRM_Profile_Form_Edit'
@@ -163,7 +146,7 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
     , 'CRM_Event_Form_ManageEvent_Location'
     , 'CRM_Financial_Form_Payment'
     , 'CRM_Contact_Form_Domain'
-  );
+  ];
   if (in_array($formName, $postCodeLookupPages)) {
     // Assign the postcode lookup provider to form, so that we can call the related function in AJAX
     $settingsStr = CRM_Core_BAO_Setting::getItem('CiviCRM Postcode Lookup', 'api_details');
@@ -180,10 +163,9 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
     $civiVersion = CRM_Civicrmpostcodelookup_Utils::getCiviVersion();
     $form->assign('civiVersion', $civiVersion);
 
-    require_once 'CRM/Core/Resources.php';
     CRM_Core_Resources::singleton()
-      ->addScriptFile('uk.co.vedaconsulting.module.civicrmpostcodelookup', 'js/jquery.ui.autocomplete.html.js', 110, 'html-header', FALSE)
-      ->addStyleFile('uk.co.vedaconsulting.module.civicrmpostcodelookup', 'css/civipostcode.css', 110, 'page-header');
+      ->addScriptFile(E::LONG_NAME, 'js/jquery.ui.autocomplete.html.js', 110, 'html-header', FALSE)
+      ->addStyleFile(E::LONG_NAME, 'css/civipostcode.css', 110, 'page-header');
   }
 }
 
@@ -194,8 +176,7 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
  * @return void
  */
 function civicrmpostcodelookup_civicrm_permission(&$permissions) {
-  $prefix = ts('CiviCRM') . ': '; // name of extension or module
-  $permissions += array(
-    'access postcode lookup' => $prefix . ts('Access CiviCRM Postcode lookups'),
-  );
+  $permissions += [
+    'access postcode lookup' => E::ts('CiviCRM: Access CiviCRM Postcode lookups'),
+  ];
 }

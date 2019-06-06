@@ -41,7 +41,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       false
     );
 
-     // Serial Number
+    // Serial Number
     $this->addElement(
       'text',
       'serial_number',
@@ -59,7 +59,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
       false
     );
 
-     // Password
+    // Password
     $this->addElement(
       'text',
       'password',
@@ -72,7 +72,7 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
     $locationTypes = array_flip(CRM_Core_PseudoConstant::get('CRM_Core_DAO_Address', 'location_type_id'));
 
     $this->addCheckBox('location_type_id',
-     ts('Location Types'),
+      ts('Location Types'),
       $locationTypes,
       NULL, NULL, NULL, NULL,
       array('&nbsp;&nbsp;')
@@ -202,9 +202,9 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
     $settingsStr = serialize($settingsArray);
 
     CRM_Core_BAO_Setting::setItem($settingsStr,
-          'CiviCRM Postcode Lookup',
-          'api_details'
-        );
+      'CiviCRM Postcode Lookup',
+      'api_details'
+    );
 
     $message = "Settings saved.";
     CRM_Core_Session::setStatus($message, 'Postcode Lookup', 'success');
@@ -212,8 +212,8 @@ class CRM_Civicrmpostcodelookup_Form_Setting extends CRM_Core_Form {
 
   function getProviderOptions() {
     $options = array(
-      '' => ts('- select -'),
-    ) + $GLOBALS["providers"];
+        '' => ts('- select -'),
+      ) + $GLOBALS["providers"];
 
     return $options;
   }

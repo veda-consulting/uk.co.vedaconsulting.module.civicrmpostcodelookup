@@ -4,15 +4,15 @@ require_once 'CRM/Core/Page.php';
 
 class CRM_Civicrmpostcodelookup_Utils {
   /**
- * mb_stripos all occurences
- * based on http://www.php.net/manual/en/function.strpos.php#87061
- *
- * Find all occurrences of a needle in a haystack
- *
- * @param string $haystack
- * @param string $needle
- * @return array or false
- */
+   * mb_stripos all occurences
+   * based on http://www.php.net/manual/en/function.strpos.php#87061
+   *
+   * Find all occurrences of a needle in a haystack
+   *
+   * @param string $haystack
+   * @param string $needle
+   * @return array or false
+   */
   public static function mb_stripos_all($haystack, $needle) {
 
     $s = 0;
