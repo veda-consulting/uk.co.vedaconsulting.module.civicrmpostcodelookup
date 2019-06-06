@@ -1,7 +1,4 @@
 {literal}
-  <style type="text/css">
-    .ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}
-  </style>
 <script type="text/javascript">
   cj(document).ready(function(){
     var locationTypes = {/literal}{if $civiPostCodeLookupLocationTypeJson}{$civiPostCodeLookupLocationTypeJson}{else}''{/if}{literal};

@@ -158,10 +158,6 @@ function civicrmpostcodelookup_civicrm_buildForm($formName, &$form) {
       $form->assign('civiPostCodeLookupLocationType', $settingsArray['location_type_id']);
       $form->assign('civiPostCodeLookupLocationTypeJson', json_encode($settingsArray['location_type_id']));
     }
-
-    CRM_Core_Resources::singleton()
-      ->addScriptFile(E::LONG_NAME, 'js/jquery.ui.autocomplete.html.js', 110, 'html-header', FALSE)
-      ->addStyleFile(E::LONG_NAME, 'css/civipostcode.css', 110, 'page-header');
   }
 }
 
