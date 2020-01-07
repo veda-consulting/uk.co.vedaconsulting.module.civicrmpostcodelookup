@@ -1,4 +1,8 @@
-# Postcode lookup for CiviCRM #
+# Moved to https://lab.civicrm.org/extensions/ukpostcodes
+
+
+
+# Postcode lookup for CiviCRM
 
 ### Overview ###
 
